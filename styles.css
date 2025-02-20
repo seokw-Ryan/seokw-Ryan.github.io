@@ -1,0 +1,70 @@
+/* Basic Reset & Typography */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #fafafa;
+    color: #333;
+    font-family: "Times New Roman", Times, serif;
+    line-height: 1.6;
+  }
+  
+  body {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  
+  /* Header Styling */
+  header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 0.4rem;
+  }
+  
+  header p {
+    font-size: 1.2rem;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  /* Main Content */
+  main {
+    margin-top: 1rem;
+  }
+  
+  .intro h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.6rem;
+  }
+  
+  .intro p {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Navigation Buttons */
+  .nav-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  .nav-buttons a {
+    text-decoration: none;
+    font-size: 1rem;
+    color: #333;
+    border: 1px solid #333;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .nav-buttons a:hover {
+    background-color: #333;
+    color: #fff;
+  }
+  
