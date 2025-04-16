@@ -33,6 +33,22 @@ header {
     flex-shrink: 0;
 }
 
+/* Profile Image Styling */
+.profile-image {
+    margin: 0 auto 1rem;
+    width: 300px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
 header h1 {
     font-size: clamp(1.5rem, 5vw, 3rem);
     margin-bottom: 0.3rem;

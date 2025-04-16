@@ -3,51 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog - Ryan Chung</title>
+  <title>Blog</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Font Awesome for social media icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    .blog-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+    
+    .blog-nav button {
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    
+    .blog-nav button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .blog-nav button.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .blog-content {
+      width: 100%;
+    }
+    
+    .year-section, .month-section, .posts-section {
+      display: none;
+    }
+    
+    .visible {
+      display: block;
+    }
+    
+    .back-button {
+      margin-bottom: 1rem;
+      background-color: transparent;
+      border: 1px solid #fff;
+      color: #fff;
+      padding: 0.3rem 0.8rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .blog {
+      text-align: center;
+      margin-top: 2rem;
+    }
+
+    .blog h2 {
+      margin-bottom: 2rem;
+    }
+
+    .nav-buttons {
+      margin-top: 2rem;
+    }
+    
+    html, body {
+      height: auto;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Ryan Chung</h1>
-    <p>Bachelor of Engineering - BE, Electrical and Electronics Engineering<br>
-       Minor in Mathematics and Computer Science
-    </p>
-    <div class="social-links">
-      <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://www.instagram.com/YOUR-USERNAME" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-x-twitter"></i>
-      </a>
-      <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-medium"></i>
-      </a>
-    </div>
-  </header>
-
   <main>
     <section class="blog">
       <h2>Blog</h2>
-      <div class="blog-posts">
-        <!-- Blog post example -->
-        <article class="blog-post">
-          <h3>First Blog Post Title</h3>
-          <p class="blog-date">May 1, 2024</p>
-          <p class="blog-excerpt">
-            This is a brief excerpt of the first blog post. It gives readers a preview of what the full article contains.
-          </p>
-          <a href="#" class="read-more">Read more</a>
-        </article>
+      
+      <!-- Year selection -->
+      <div class="blog-content">
+        <div id="years" class="year-section visible">
+          <div class="blog-nav">
+            <button class="year-btn" data-year="2025">2025</button>
+            <!-- More years can be added here as needed -->
+          </div>
+        </div>
         
-        <!-- Add more blog posts here -->
+        <!-- Month selection (initially hidden) -->
+        <div id="months-2025" class="month-section">
+          <button class="back-button" onclick="showYears()">← Back to Years</button>
+          <div class="blog-nav">
+            <button class="month-btn" data-year="2025" data-month="01">January</button>
+            <button class="month-btn" data-year="2025" data-month="02">February</button>
+            <button class="month-btn" data-year="2025" data-month="03">March</button>
+            <button class="month-btn" data-year="2025" data-month="04">April</button>
+            <button class="month-btn" data-year="2025" data-month="05">May</button>
+            <button class="month-btn" data-year="2025" data-month="06">June</button>
+            <button class="month-btn" data-year="2025" data-month="07">July</button>
+            <button class="month-btn" data-year="2025" data-month="08">August</button>
+            <button class="month-btn" data-year="2025" data-month="09">September</button>
+            <button class="month-btn" data-year="2025" data-month="10">October</button>
+            <button class="month-btn" data-year="2025" data-month="11">November</button>
+            <button class="month-btn" data-year="2025" data-month="12">December</button>
+          </div>
+        </div>
+        
+        <!-- Blog posts sections (initially hidden) -->
+        <!-- Example for April 2025 -->
+        <div id="posts-2025-04" class="posts-section">
+          <button class="back-button" onclick="showMonths('2025')">← Back to Months</button>
+          <h3>April 2025</h3>
+          <div class="blog-posts">
+            <!-- April 16, 2025 blog post -->
+            <article class="blog-post">
+              <h3>Daily Diary</h3>
+              <p class="blog-date">April 16, 2025 - Wednesday</p>
+              <p class="blog-excerpt">
+                Daily activities including a 2km run, studying FPGA, watching Qiskit videos, and reflections on the Korean stock market. Notes on NAND gates, De Morgan's Law, and Quartus Prime.
+              </p>
+              <a href="blog-posts/2025/04/2025-04-16.html" class="read-more">Read more</a>
+            </article>
+            
+            <!-- Example blog post - Remove once you have real posts -->
+            <article class="blog-post">
+              <h3>First Blog Post</h3>
+              <p class="blog-date">April 1, 2025</p>
+              <p class="blog-excerpt">
+                This is an example of my first blog post. Here I'll share my thoughts and experiences of the day.
+              </p>
+              <a href="#" class="read-more">Read more</a>
+            </article>
+            
+            <!-- More blog posts can be added here -->
+          </div>
+        </div>
       </div>
     </section>
 
@@ -58,5 +145,51 @@
       <a href="projects.html">Projects</a>
     </nav>
   </main>
+
+  <script>
+    // Show year selection
+    function showYears() {
+      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
+        section.classList.remove('visible');
+      });
+      document.getElementById('years').classList.add('visible');
+    }
+    
+    // Show month selection for a specific year
+    function showMonths(year) {
+      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
+        section.classList.remove('visible');
+      });
+      document.getElementById(`months-${year}`).classList.add('visible');
+    }
+    
+    // Show posts for a specific year and month
+    function showPosts(year, month) {
+      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
+        section.classList.remove('visible');
+      });
+      document.getElementById(`posts-${year}-${month}`).classList.add('visible');
+    }
+    
+    // Add event listeners to buttons
+    document.addEventListener('DOMContentLoaded', function() {
+      // Year buttons
+      document.querySelectorAll('.year-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const year = this.dataset.year;
+          showMonths(year);
+        });
+      });
+      
+      // Month buttons
+      document.querySelectorAll('.month-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const year = this.dataset.year;
+          const month = this.dataset.month;
+          showPosts(year, month);
+        });
+      });
+    });
+  </script>
 </body>
 </html> 
