@@ -115,6 +115,66 @@ main {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Blog Section Styling */
+.blog {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.blog h2 {
+    text-align: center;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    margin-bottom: 1.5rem;
+}
+
+.blog-posts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.blog-post {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.blog-post:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+.blog-post h3 {
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.blog-date {
+    font-size: 0.9rem;
+    color: #aaa;
+    margin-bottom: 1rem;
+}
+
+.blog-excerpt {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.read-more {
+    display: inline-block;
+    color: #fff;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
+    padding-bottom: 0.2rem;
+    transition: border-color 0.2s ease;
+}
+
+.read-more:hover {
+    border-color: transparent;
+}
+
 /* Media Query for Smaller Screens */
 @media (max-width: 600px) {
     body {
