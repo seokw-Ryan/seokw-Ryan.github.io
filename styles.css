@@ -162,9 +162,10 @@ main {
 /* Navigation Buttons */
 .nav-buttons {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 1rem;
     justify-content: center;
+    align-items: center;
     padding: 0.5rem;
     width: 100%;
     margin-top: 0.5rem;
@@ -180,6 +181,8 @@ main {
     white-space: nowrap;
     background-color: #000;
     transition: all 0.2s ease;
+    width: 220px;
+    text-align: center;
 }
 
 .nav-buttons a:hover {
