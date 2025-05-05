@@ -14,44 +14,53 @@
       <img src="profile_image.png" alt="Ryan Chung Profile" />
     </div>
     <h1>Ryan Chung</h1>
-    <p>Bachelor of Engineering - BE, Electrical and Electronics Engineering<br>
-       Minor in Mathematics and Computer Science
-    </p>
+    
     <div class="social-links">
-      <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-github"></i>
-      </a>
-      <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-x-twitter"></i>
-      </a>
-      <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
-        <i class="fab fa-medium"></i>
-      </a>
+      <button id="socials-btn" class="socials-button">Socials</button>
+      <div id="socials-dropdown" class="socials-dropdown">
+        <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-x-twitter"></i> Twitter
+        </a>
+        <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-medium"></i> Medium
+        </a>
+      </div>
     </div>
   </header>
 
   <main>
-    <section class="intro">
-      
-      <p>
-        Aspiring AI hardware engineer with a passion for low-level programming, compilers, and quantum computing.
-        Currently building expertise through hands-on projects in AI agents and robotics.
-        Firm believer in the importance of compute and electricity for humanity.
-      </p>
-    </section>
-
     <nav class="nav-buttons">
+      <a href="about.html">About Me</a>
       <a href="timeline.html">Timeline</a>
       <a href="technical_skills.html">Technical Skills and Tools</a>
       <a href="projects.html">Projects</a>
-      <a href="blog.html">Blog</a>
     </nav>
   </main>
+
+  <script>
+    // Toggle socials dropdown when button is clicked
+    document.getElementById('socials-btn').addEventListener('click', function() {
+      document.getElementById('socials-dropdown').classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    window.addEventListener('click', function(event) {
+      if (!event.target.matches('.socials-button')) {
+        const dropdown = document.getElementById('socials-dropdown');
+        if (dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    });
+  </script>
 </body>
 </html>
