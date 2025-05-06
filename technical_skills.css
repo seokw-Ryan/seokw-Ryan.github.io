@@ -78,30 +78,6 @@ header h1 {
     color: #ffffff;
 }
 
-/* Navigation buttons */
-.nav-buttons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    flex-wrap: wrap;
-    padding: 1rem 0;
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.nav-buttons a {
-    text-decoration: none;
-    color: #ffffff;
-    border: 1px solid #ffffff;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: transparent;
-    text-align: center;
-    min-width: 100px;
-}
-
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
@@ -110,10 +86,6 @@ header h1 {
     
     .skill-category {
         padding: 1rem;
-    }
-    
-    .nav-buttons {
-        gap: 1rem;
     }
 }
 
@@ -128,15 +100,5 @@ header h1 {
     
     .skill-category li {
         font-size: 1rem;
-    }
-    
-    .nav-buttons {
-        gap: 0.5rem;
-    }
-    
-    .nav-buttons a {
-        padding: 0.4rem 0.8rem;
-        font-size: 0.9rem;
-        min-width: 80px;
     }
 } 

@@ -1,0 +1,146 @@
+/* Specific styles for index.html */
+html, body {
+    height: 100vh;
+    overflow: hidden;
+}
+
+body {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Profile Image Styling */
+.profile-image {
+    margin: 0 auto 1rem;
+    width: 300px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+header p {
+    font-size: clamp(0.9rem, 2vw, 1.3rem);
+    margin: 0.2rem 0;
+    line-height: 1.4;
+}
+
+/* Social Links Styling */
+.social-links {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    position: relative;
+}
+
+.social-links a {
+    color: #fff;
+    font-size: 1.8rem;
+    transition: transform 0.2s ease;
+}
+
+.social-links a:hover {
+    transform: scale(1.1);
+}
+
+/* Socials Button and Dropdown */
+.socials-button {
+    font-family: "Times New Roman", Times, serif;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.socials-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.socials-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000;
+    border: 1px solid #fff;
+    z-index: 10;
+    width: 200px;
+    padding: 0.5rem 0;
+    margin-top: 0.5rem;
+}
+
+.socials-dropdown.show {
+    display: block;
+}
+
+.socials-dropdown a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+.socials-dropdown a i {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.socials-dropdown a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: none;
+}
+
+/* Main Content */
+main {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 900px;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    padding: 0.5rem 0;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    body {
+        padding: 0.5rem;
+    }
+    
+    header {
+        padding: 0.2rem 0;
+    }
+    
+    header p {
+        font-size: clamp(0.8rem, 1.5vw, 1rem);
+    }
+    
+    main {
+        gap: 0.5rem;
+    }
+} 

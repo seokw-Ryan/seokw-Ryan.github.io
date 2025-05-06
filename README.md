@@ -1,60 +1,49 @@
-# Ryan Chung's Personal Website
+# Personal Portfolio Website
 
-A clean, minimalist personal website showcasing my professional journey, skills, and projects.
+This is a personal portfolio website for Ryan Chung, showcasing educational background, technical skills, projects, and blog posts.
 
-## Overview
+## Project Structure
 
-This is my personal website built with HTML and CSS, featuring:
-- Professional background and education
-- Technical skills and tools
-- Project portfolio
-- Personal philosophy
-- Interactive timeline of my journey
+### HTML Files
+- `index.html`: The homepage/landing page
+- `about.html`: About me section
+- `timeline.html`: Timeline of education and career
+- `technical_skills.html`: Technical skills and tools page
+- `projects.html`: Portfolio projects showcase
+- `blog.html`: Blog posts listing
 
-## Features
+### CSS Organization
+The project uses a modular CSS approach where:
 
-- **Responsive Design**: Clean, minimalist layout that works well on all devices
-- **Easy Navigation**: Simple and intuitive navigation between different sections
-- **Professional Presentation**: Showcases education, skills, and projects in an organized manner
-- **Social Media Integration**: Links to professional social media profiles
+1. `common.css`: Contains common styles used across all pages, such as:
+   - Base typography
+   - Navigation buttons
+   - Common header styles
+   - Media queries that apply globally
 
-## Pages
+2. Page-specific CSS files follow a one-to-one relationship with HTML files:
+   - `index.css`: Styles specific to the homepage
+   - `about.css`: Styles specific to the about page
+   - `timeline.css`: Styles specific to the timeline page
+   - `blog-styles.css`: Styles specific to the blog listing page
+   - `projects.css`: Styles specific to the projects page
+   - `technical_skills.css`: Styles specific to the skills page
 
-1. **Home** (`index.html`): Introduction and main navigation
-2. **Timeline** (`timeline.html`): Chronological overview of education and experience
-3. **Technical Skills** (`technical_skills.html`): Detailed list of technical competencies
-4. **Projects** (`projects.html`): Portfolio of completed and ongoing projects
-5. **Philosophy** (`philosophy.html`): Personal and professional philosophy
+This organization helps with:
+- Better maintainability, as changes to one page don't affect others
+- Improved performance, as browsers only need to load the CSS relevant to the current page
+- Easier organization for future development
 
-## Technologies Used
+### Media
+- `profile_image.png`: Profile picture
 
-- HTML5
-- CSS3
-- Responsive Web Design principles
+## Development
 
-## Setup
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/seokw-Ryan/seokw-Ryan.github.io.git
-   ```
-
-2. Open `index.html` in your web browser to view the website locally.
-
-## Customization
-
-To customize this website for your own use:
-
-1. Update personal information in `index.html`
-2. Modify the timeline in `timeline.html`
-3. Add your skills in `technical_skills.html`
-4. Showcase your projects in `projects.html`
-5. Add your personal philosophy in `philosophy.html`
-6. Update social media links with your profiles
-
-## Contributing
-
-This is a personal website, but suggestions for improvements are welcome. Please feel free to open issues or submit pull requests.
+To add a new page:
+1. Create a new HTML file
+2. Create a corresponding CSS file
+3. Include both `common.css` and your page-specific CSS in the HTML file
+4. Add a navigation link to the new page in the other HTML files
 
 ## License
 
