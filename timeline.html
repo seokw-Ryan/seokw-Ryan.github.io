@@ -4,8 +4,201 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Timeline - Ryan Chung</title>
-  <link rel="stylesheet" href="common.css" />
-  <link rel="stylesheet" href="timeline.css" />
+  <style>
+    /* Common styles shared across all pages */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.6;
+    }
+
+    /* Navigation Buttons - Common across all pages */
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: #fff;
+      border: 1px solid #fff;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: #000;
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Common header styles */
+    header {
+      text-align: center;
+      width: 100%;
+      max-width: 900px;
+      padding: 0.5rem 0;
+    }
+
+    header h1 {
+      font-size: clamp(1.5rem, 5vw, 3rem);
+      margin-bottom: 0.3rem;
+    }
+
+    /* Specific styles for timeline.html */
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: flex-start;
+      align-items: center;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    /* Header extras */
+    header {
+      margin-bottom: 1rem;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 900px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+
+    /* Timeline Section */
+    .timeline {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      padding: 0 1rem;
+    }
+
+    .timeline h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .timeline-container {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 7px;
+      height: 100%;
+      width: 2px;
+      background-color: #fff;
+    }
+
+    .timeline-item {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2rem;
+      top: 0.5rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background-color: #fff;
+    }
+
+    .timeline-date {
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+
+    .timeline-content {
+      line-height: 1.5;
+    }
+
+    /* Navigation Buttons extra styles */
+    .nav-buttons {
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    /* Media Queries */
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+      
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+      
+      header h1 {
+        font-size: clamp(1.2rem, 4vw, 2rem);
+      }
+      
+      body {
+        padding: 0.5rem;
+      }
+      
+      header {
+        padding: 0.2rem 0;
+      }
+      
+      .timeline h2 {
+        font-size: 1.3rem;
+      }
+      
+      .timeline-container {
+        padding-left: 1.5rem;
+      }
+      
+      .timeline-item::before {
+        left: -1.5rem;
+        width: 12px;
+        height: 12px;
+      }
+      
+      .timeline-date {
+        font-size: 1rem;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
