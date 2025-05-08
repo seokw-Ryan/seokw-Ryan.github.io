@@ -20,39 +20,32 @@
     /* Navigation Buttons - Common across all pages */
     .nav-buttons {
       display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
       gap: 1rem;
-      justify-content: center;
-      align-items: center;
       padding: 0.5rem;
-      width: 100%;
       margin-top: 0.5rem;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: visible;
     }
 
-    .nav-buttons a {
-      text-decoration: none;
-      font-size: clamp(0.8rem, 1.8vw, 1rem);
-      color: #fff;
-      border: 1px solid #fff;
-      padding: 0.5rem 1rem;
-      white-space: nowrap;
-      background-color: #000;
-      transition: all 0.2s ease;
-      width: 220px;
-      text-align: center;
-      box-sizing: border-box;
+    .nav-buttons a, .nav-button {
+      flex: 1 1 auto;
+      min-width: 180px;
+      max-width: 220px;
+      padding: 0.8rem 0.5rem;
+      font-size: clamp(0.8rem, 1.8vw, 1.1rem);
     }
 
-    .nav-buttons a:hover {
+    /* Consolidated hover states */
+    a:hover, button:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
 
     /* Common header styles */
     header {
       text-align: center;
-      width: 100%;
-      max-width: 900px;
       padding: 0.5rem 0;
     }
 
@@ -63,8 +56,8 @@
 
     /* Specific styles for index.html */
     html, body {
-      height: 100vh;
-      overflow: hidden;
+      height: auto;
+      overflow: visible;
     }
 
     body {
@@ -74,11 +67,11 @@
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
-      height: 100vh;
-      justify-content: center;
+      min-height: 100vh;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
     }
 
     /* Profile Image Styling */
@@ -178,7 +171,7 @@
 
     /* Main Content */
     main {
-      flex: 0 0 auto;
+      flex: 1;
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -189,15 +182,17 @@
       padding: 0.5rem 0;
     }
 
-    /* Common media queries */
+    /* Reduced media query complexity */
     @media (max-width: 600px) {
       .nav-buttons {
         gap: 0.5rem;
+        padding: 0.5rem;
       }
       
-      .nav-buttons a {
-        width: 160px;
+      .nav-buttons a, .nav-button {
+        min-width: 120px;
         font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+        padding: 0.5rem 0.3rem;
       }
       
       header h1 {
@@ -219,6 +214,44 @@
       main {
         gap: 0.5rem;
       }
+    }
+
+    /* Update button styles to match navigation */
+    .nav-button {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+      white-space: nowrap;
+      padding: 0.8rem 1.2rem;
+      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+      background-color: #000;
+      color: #fff;
+      border: 1px solid #fff;
+      cursor: pointer;
+      font-family: "Times New Roman", Times, serif;
+      transition: background-color 0.2s ease;
+    }
+
+    /* Position dropdown relative to nav container */
+    .nav-socials-container {
+      position: relative;
+      display: flex;
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    /* Adjust dropdown positioning */
+    .socials-dropdown {
+      top: 100%;
+      left: 0;
+      transform: none;
+      width: 100%;
+    }
+
+    /* Remove original socials section from header */
+    .social-links {
+      display: none;
     }
   </style>
 </head>
@@ -253,23 +286,45 @@
 
   <main>
     <nav class="nav-buttons">
-      <a href="about.html">About Me</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="technical_skills.html">Technical Skills and Tools</a>
-      <a href="projects.html">Projects</a>
+      <a href="about.html" class="nav-button">About Me</a>
+      <a href="timeline.html" class="nav-button">Timeline</a>
+      <a href="technical_skills.html" class="nav-button">Technical Skills</a>
+      <a href="projects.html" class="nav-button">Projects</a>
+      
+      <!-- Moved Socials button here -->
+      <div class="nav-socials-container">
+        <button id="nav-socials-btn" class="nav-button">Socials</button>
+        <div id="nav-socials-dropdown" class="socials-dropdown">
+          <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+          <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-x-twitter"></i> Twitter
+          </a>
+          <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-medium"></i> Medium
+          </a>
+        </div>
+      </div>
     </nav>
   </main>
 
   <script>
     // Toggle socials dropdown when button is clicked
-    document.getElementById('socials-btn').addEventListener('click', function() {
-      document.getElementById('socials-dropdown').classList.toggle('show');
+    document.getElementById('nav-socials-btn').addEventListener('click', function() {
+      document.getElementById('nav-socials-dropdown').classList.toggle('show');
     });
 
     // Close dropdown when clicking outside
     window.addEventListener('click', function(event) {
-      if (!event.target.matches('.socials-button')) {
-        const dropdown = document.getElementById('socials-dropdown');
+      if (!event.target.matches('.nav-button')) {
+        const dropdown = document.getElementById('nav-socials-dropdown');
         if (dropdown.classList.contains('show')) {
           dropdown.classList.remove('show');
         }
