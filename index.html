@@ -290,46 +290,13 @@
       <a href="timeline.html" class="nav-button">Timeline</a>
       <a href="technical_skills.html" class="nav-button">Technical Skills</a>
       <a href="projects.html" class="nav-button">Projects</a>
-      
-      <!-- Moved Socials button here -->
-      <div class="nav-socials-container">
-        <button id="nav-socials-btn" class="nav-button">Socials</button>
-        <div id="nav-socials-dropdown" class="socials-dropdown">
-          <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-linkedin"></i> LinkedIn
-          </a>
-          <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-github"></i> GitHub
-          </a>
-          <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-instagram"></i> Instagram
-          </a>
-          <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-x-twitter"></i> Twitter
-          </a>
-          <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
-            <i class="fab fa-medium"></i> Medium
-          </a>
-        </div>
-      </div>
+      <a href="socials.html" class="nav-button">Socials</a>
     </nav>
   </main>
 
   <script>
-    // Toggle socials dropdown when button is clicked
-    document.getElementById('nav-socials-btn').addEventListener('click', function() {
-      document.getElementById('nav-socials-dropdown').classList.toggle('show');
-    });
-
-    // Close dropdown when clicking outside
-    window.addEventListener('click', function(event) {
-      if (!event.target.matches('.nav-button')) {
-        const dropdown = document.getElementById('nav-socials-dropdown');
-        if (dropdown.classList.contains('show')) {
-          dropdown.classList.remove('show');
-        }
-      }
-    });
+    // Remove the dropdown toggle script since it's no longer needed
+    // Keep any other necessary scripts
   </script>
 </body>
 </html>

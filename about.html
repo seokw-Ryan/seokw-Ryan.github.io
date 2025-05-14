@@ -6,7 +6,6 @@
   <title>About Ryan Chung</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
-    /* Common styles shared across all pages */
     html, body {
       margin: 0;
       padding: 0;
@@ -14,9 +13,10 @@
       color: #fff;
       font-family: "Times New Roman", Times, serif;
       line-height: 1.6;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    /* Navigation Buttons - Common across all pages */
     .nav-buttons {
       display: flex;
       flex-direction: row;
@@ -47,23 +47,17 @@
       background-color: rgba(255, 255, 255, 0.1);
     }
 
-    /* Common header styles */
     header {
       text-align: center;
       width: 100%;
       max-width: 900px;
       padding: 0.5rem 0;
+      flex-shrink: 0;
     }
 
     header h1 {
       font-size: clamp(1.5rem, 5vw, 3rem);
       margin-bottom: 0.3rem;
-    }
-
-    /* Specific styles for about.html */
-    html, body {
-      height: 100vh;
-      overflow: hidden;
     }
 
     body {
@@ -73,39 +67,11 @@
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
-      height: 100vh;
       justify-content: center;
       align-items: center;
       position: relative;
-      overflow: hidden;
     }
 
-    /* Header Styling */
-    header {
-      text-align: center;
-      width: 100%;
-      max-width: 900px;
-      padding: 0.5rem 0;
-      flex-shrink: 0;
-    }
-
-    /* Profile Image Styling */
-    .profile-image {
-      margin: 0 auto 1rem;
-      width: 300px;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    /* Main Content */
     main {
       flex: 1;
       display: flex;
@@ -117,7 +83,6 @@
       padding: 0.5rem 0;
     }
 
-    /* About Section */
     .about {
       text-align: center;
       margin: 0 auto;
@@ -137,33 +102,32 @@
       line-height: 1.6;
     }
 
-    /* Media Queries */
     @media (max-width: 600px) {
       .nav-buttons {
         gap: 0.5rem;
       }
-      
+
       .nav-buttons a {
         width: 160px;
         font-size: clamp(0.7rem, 1.5vw, 0.9rem);
       }
-      
+
       header h1 {
         font-size: clamp(1.2rem, 4vw, 2rem);
       }
-      
+
       body {
         padding: 0.5rem;
       }
-      
+
       header {
         padding: 0.2rem 0;
       }
-      
+
       .about h2 {
         font-size: 1.3rem;
       }
-      
+
       .about p {
         font-size: 1rem;
       }
@@ -172,9 +136,6 @@
 </head>
 <body>
   <header>
-    <div class="profile-image">
-      <img src="profile_image.png" alt="Ryan Chung Profile" />
-    </div>
     <h1>About Me</h1>
   </header>
 
@@ -201,4 +162,4 @@
     </nav>
   </main>
 </body>
-</html> 
+</html>

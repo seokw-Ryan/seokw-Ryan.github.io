@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ryan Chung - Social Links</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    /* Shared styles from index.html */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.6;
+    }
+
+    body {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 1rem;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      width: 100%;
+      max-width: 1200px;
+      justify-content: center;
+      flex-wrap: nowrap;
+    }
+
+    .nav-buttons a {
+      flex: 1 1 auto;
+      min-width: 180px;
+      max-width: 220px;
+      padding: 0.8rem 0.5rem;
+      font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+      text-decoration: none;
+      color: white;
+      border: 1px solid white;
+      text-align: center;
+    }
+
+    .socials-container {
+      margin: 2rem 0;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid white;
+      transition: background-color 0.2s ease;
+    }
+
+    .social-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .social-link i {
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      width: 40px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Social Links</h1>
+  </header>
+
+  <nav class="nav-buttons">
+    <a href="index.html">Home</a>
+    <a href="about.html">About Me</a>
+    <a href="timeline.html">Timeline</a>
+    <a href="technical_skills.html">Technical Skills</a>
+    <a href="projects.html">Projects</a>
+  </nav>
+
+  <main>
+    <div class="socials-container">
+      <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/seokw-Ryan" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.instagram.com/seokwoo_ryan" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-instagram"></i>
+        <span>Instagram</span>
+      </a>
+      <a href="https://x.com/ryan_chung_swc" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-x-twitter"></i>
+        <span>Twitter</span>
+      </a>
+      <a href="https://medium.com/@seokwoo.chung130" class="social-link" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-medium"></i>
+        <span>Medium</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
