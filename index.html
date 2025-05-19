@@ -1,302 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ryan Chung - ECE & AI</title>
-  <!-- Font Awesome for social media icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <meta charset="UTF-8">
+  <title>Seokwoo Chung – Resume</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    /* Common styles shared across all pages */
-    html, body {
-      margin: 0;
-      padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: "Times New Roman", Times, serif;
-      line-height: 1.6;
+    /* Global */
+    * {
+      box-sizing: border-box;
     }
-
-    /* Navigation Buttons - Common across all pages */
-    .nav-buttons {
-      display: flex;
-      gap: 1rem;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      width: 100%;
-      max-width: 1200px;
-      justify-content: center;
-      flex-wrap: nowrap;
-      overflow-x: visible;
-    }
-
-    .nav-buttons a, .nav-button {
-      flex: 1 1 auto;
-      min-width: 180px;
-      max-width: 220px;
-      padding: 0.8rem 0.5rem;
-      font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-    }
-
-    /* Consolidated hover states */
-    a:hover, button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Common header styles */
-    header {
-      text-align: center;
-      padding: 0.5rem 0;
-    }
-
-    header h1 {
-      font-size: clamp(1.5rem, 5vw, 3rem);
-      margin-bottom: 0.3rem;
-    }
-
-    /* Specific styles for index.html */
-    html, body {
-      height: auto;
-      overflow: visible;
-    }
-
     body {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0.5rem;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      justify-content: flex-start;
-      align-items: center;
-      position: relative;
-      overflow: visible;
-    }
-
-    /* Profile Image Styling */
-    .profile-image {
-      margin: 0 auto 1rem;
-      width: 300px;
-      height: auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: auto;
-      object-fit: contain;
-    }
-
-    header p {
-      font-size: clamp(0.9rem, 2vw, 1.3rem);
-      margin: 0.2rem 0;
-      line-height: 1.4;
-    }
-
-    /* Social Links Styling */
-    .social-links {
-      margin: 0.5rem 0;
-      display: flex;
-      justify-content: center;
-      gap: 1.5rem;
-      position: relative;
-    }
-
-    .social-links a {
+      margin: 0;
+      background: #000;
       color: #fff;
-      font-size: 1.8rem;
-      transition: transform 0.2s ease;
+      font-family: sans-serif;
     }
-
-    .social-links a:hover {
-      transform: scale(1.1);
-    }
-
-    /* Socials Button and Dropdown */
-    .socials-button {
-      font-family: "Times New Roman", Times, serif;
-      background-color: #000;
-      color: #fff;
-      border: 1px solid #fff;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.2s ease;
-    }
-
-    .socials-button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .socials-dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #000;
-      border: 1px solid #fff;
-      z-index: 10;
-      width: 200px;
-      padding: 0.5rem 0;
-      margin-top: 0.5rem;
-    }
-
-    .socials-dropdown.show {
-      display: block;
-    }
-
-    .socials-dropdown a {
-      display: flex;
-      align-items: center;
+    a {
       color: #fff;
       text-decoration: none;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      transition: background-color 0.2s ease;
+      transition: color 0.2s;
+    }
+    a:hover {
+      color: #ddd;
     }
 
-    .socials-dropdown a i {
-      margin-right: 0.5rem;
-      font-size: 1.2rem;
-    }
-
-    .socials-dropdown a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
-      transform: none;
-    }
-
-    /* Main Content */
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      max-width: 900px;
-      align-items: center;
-      justify-content: center;
-      gap: 0.8rem;
-      padding: 0.5rem 0;
-    }
-
-    /* Reduced media query complexity */
-    @media (max-width: 600px) {
-      .nav-buttons {
-        gap: 0.5rem;
-        padding: 0.5rem;
-      }
-      
-      .nav-buttons a, .nav-button {
-        min-width: 120px;
-        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-        padding: 0.5rem 0.3rem;
-      }
-      
-      header h1 {
-        font-size: clamp(1.2rem, 4vw, 2rem);
-      }
-      
-      body {
-        padding: 0.5rem;
-      }
-      
-      header {
-        padding: 0.2rem 0;
-      }
-      
-      header p {
-        font-size: clamp(0.8rem, 1.5vw, 1rem);
-      }
-      
-      main {
-        gap: 0.5rem;
-      }
-    }
-
-    /* Update button styles to match navigation */
-    .nav-button {
-      flex: 1;
-      min-width: 200px;
-      max-width: 300px;
-      white-space: nowrap;
-      padding: 0.8rem 1.2rem;
-      font-size: clamp(0.9rem, 1.5vw, 1.2rem);
-      background-color: #000;
-      color: #fff;
-      border: 1px solid #fff;
-      cursor: pointer;
-      font-family: "Times New Roman", Times, serif;
-      transition: background-color 0.2s ease;
-    }
-
-    /* Position dropdown relative to nav container */
-    .nav-socials-container {
-      position: relative;
-      display: flex;
-      flex: 1;
-      min-width: 200px;
-      max-width: 300px;
-    }
-
-    /* Adjust dropdown positioning */
-    .socials-dropdown {
-      top: 100%;
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
       left: 0;
-      transform: none;
-      width: 100%;
+      width: 220px;
+      height: 100%;
+      background: #111;
+      padding-top: 2rem;
+    }
+    .sidebar nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .sidebar nav li + li {
+      margin-top: 1rem;
+    }
+    .sidebar nav a {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: #fff;
     }
 
-    /* Remove original socials section from header */
-    .social-links {
-      display: none;
+    /* Main content */
+    main {
+      margin-left: 220px;
+      padding: 2rem;
+    }
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid #444;
+    }
+    section:last-of-type {
+      border: none;
+    }
+    h2 {
+      margin-top: 0;
+      color: #fff;
+    }
+
+    /* Timeline & Experience bullets */
+    .timeline > ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    /* restore bullets for nested lists of responsibilities */
+    .timeline .event ul {
+      list-style: disc;
+      margin: 0.5rem 0 0 1.5rem;
+      padding: 0;
+    }
+    .timeline .event ul li {
+      margin-bottom: 0.5rem;
+    }
+    .timeline .date {
+      font-weight: bold;
+      color: #aaa;
+    }
+    .timeline .event {
+      margin-left: 1rem;
+    }
+
+    /* Socials */
+    .socials-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #222;
+      border-radius: 4px;
+      transition: background 0.2s;
+      color: #fff;
+    }
+    .social-link i {
+      font-size: 1.2rem;
+      color: #fff;
+    }
+    .social-link:hover {
+      background: #333;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .sidebar {
+        width: 160px;
+        padding-top: 1.5rem;
+      }
+      main {
+        margin-left: 160px;
+        padding: 1rem;
+      }
+      .sidebar nav a {
+        padding: 0.4rem 0.8rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="profile-image">
-      <img src="profile_image.png" alt="Ryan Chung Profile" />
-    </div>
-    <h1>Ryan Chung</h1>
-    
-    <div class="social-links">
-      <button id="socials-btn" class="socials-button">Socials</button>
-      <div id="socials-dropdown" class="socials-dropdown">
-        <a href="https://www.linkedin.com/in/ryan-chung-8475a7210/" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-linkedin"></i> LinkedIn
-        </a>
-        <a href="https://github.com/seokw-Ryan" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-instagram"></i> Instagram
-        </a>
-        <a href="https://x.com/ryan_chung_swc" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-x-twitter"></i> Twitter
-        </a>
-        <a href="https://medium.com/@seokwoo.chung130" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-medium"></i> Medium
-        </a>
-      </div>
-    </div>
-  </header>
+
+  <aside class="sidebar">
+    <nav>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#socials">Socials</a></li>
+      </ul>
+    </nav>
+  </aside>
 
   <main>
-    <nav class="nav-buttons">
-      <a href="about.html" class="nav-button">About Me</a>
-      <a href="timeline.html" class="nav-button">Timeline</a>
-      <a href="technical_skills.html" class="nav-button">Technical Skills</a>
-      <a href="projects.html" class="nav-button">Projects</a>
-      <a href="socials.html" class="nav-button">Socials</a>
-    </nav>
+    <section id="overview">
+      <h2>Seokwoo Chung</h2>
+      <p>
+        <strong>Email:</strong>
+        <a href="mailto:seokwoo.chung@cooper.edu">seokwoo.chung@cooper.edu</a><br>
+        <strong>LinkedIn:</strong>
+        <a href="https://linkedin.com/in/ryan-seokwoo-chung" target="_blank" rel="noopener noreferrer">
+          linkedin.com/in/ryan-seokwoo-chung
+        </a>
+      </p>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <p>
+        <strong>The Cooper Union for the Advancement of Science and Art</strong>, New York City, NY<br>
+        Bachelor of Engineering in Electrical Engineering, Expected 2027<br>
+        Minor in Mathematics and Computer Science
+      </p>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <ul>
+          <li>
+            <div class="date">October 2023 – Present</div>
+            <div class="event">
+              <strong>Public Service Worker</strong>, Mandatory Military Service, Gyeonggi, South Korea
+              <ul>
+                <li>Served in regional public-interest projects through community engagement and administrative support.</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="date">June 2023 – August 2023</div>
+            <div class="event">
+              <strong>ROS/Software Developer – Drone Control</strong>, The Cooper Union, NYC
+              <ul>
+                <li>Developed autonomous flight control for Crazyflie nano-quadcopters using a ROS-based stack.</li>
+                <li>Integrated gyroscope, accelerometer, optical flow, and range sensors for real-time attitude estimation.</li>
+                <li>Tuned Kalman filters in embedded C++ firmware to enhance responsiveness.</li>
+                <li>Technologies: C++, Python, ROS, Crazyflie SDK, Embedded Firmware, Git, CMake.</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="date">June 2023 – August 2023</div>
+            <div class="event">
+              <strong>Scholars Mentor – STEM Outreach</strong>, The Cooper Union, NYC
+              <ul>
+                <li>Mentored NYC public high school students in a six-week STEM internship; led workshops on communication and leadership.</li>
+                <li>Coordinated with faculty and K-12 partners, managed logistics, and coached lesson planning.</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="date">Fall 2021 – Spring 2023</div>
+            <div class="event">
+              <strong>Autonomous Vehicles (IGVC)</strong>, The Cooper Union, NYC
+              <ul>
+                <li>Worked on ROS-based perception, SLAM, and path planning team for the International Ground Vehicle Competition (IGVC).</li>
+                <li>Developed LiDAR-based SLAM and obstacle detection algorithms using ROS and OpenCV.</li>
+                <li>Implemented path planning modules (A*, RRT) in C++ and Python.</li>
+                <li>Skills: ROS, SLAM, perception, path planning, C++, Python, OpenCV, PCL, Git, CMake.</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="date">June 2022 – August 2022</div>
+            <div class="event">
+              <strong>Engineering Volunteer</strong>, Centro de Paz Bárbara Ford (NGO), Guatemala
+              <ul>
+                <li>Deployed Arduino (ESP8266 + DS18B20) sensors to map thermal loss; quantified 23% heat-lamp profit loss.</li>
+                <li>Designed firewood-powered hydronic heating prototype with recycled-material insulation.</li>
+                <li>Redesigned coop interiors to boost thermal efficiency; piloted by local farms.</li>
+                <li>Co-authored paper at 2023 IEEE GHTC; <a href="https://ieeexplore.ieee.org/document/10354950" target="_blank" rel="noopener noreferrer">View paper</a>.</li>
+                <li>Technologies: Arduino, C/C++, Thermal Modeling, Data Analysis, IoT Prototyping.</li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul>
+        <li>
+          <strong>Low-Level Systems Research:</strong> Analyzed Intel CPU and iGPU performance with Linux profiling tools. Developed C/C++ benchmarks to explore instruction throughput, caching, thermal limits, and power efficiency. Tools: top/htop, mpstat, perf, RAPL, vmstat, intel_gpu_top.
+        </li>
+        <li>
+          <strong>AI Inference Benchmark Automation:</strong> Created Python scripts to benchmark deep-learning inference on CPU/GPU, comparing latency, memory usage, and power draw across model sizes and batch configurations. Tools: PyTorch, ONNX, psutil, RAPL, time, Matplotlib, GitHub.
+        </li>
+      </ul>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <ul>
+        <li><strong>Languages:</strong> Python, C, C++, Shell/Bash (Proficient); Assembly, Verilog, VHDL, JavaScript/TypeScript, HTML/CSS (Familiar).</li>
+        <li><strong>Technologies & Frameworks:</strong> NumPy, ROS, Linux, Git, Qiskit, Docker, PyTorch (Proficient); TensorFlow, ReactJS, Node.js (Familiar).</li>
+        <li><strong>Specialized:</strong> SLAM, perception, path planning, OpenCV, PCL.</li>
+      </ul>
+    </section>
+
+    <section id="awards">
+      <h2>Awards & Certificates</h2>
+      <ul>
+        <li>The Cooper Union Half Tuition Scholarship, Fall 2021 – Spring 2023</li>
+        <li>The Cooper Union Dean’s List, Fall 2021 – Spring 2023</li>
+        <li>Google Project Management Professional Certificate</li>
+        <li>DeepLearning.AI Deep Learning Specialization</li>
+        <li>Imperial College London Mathematics for Machine Learning Specialization</li>
+      </ul>
+    </section>
+
+    <section id="timeline">
+      <h2>Timeline</h2>
+      <div class="timeline">
+        <ul>
+          <li>
+            <div class="date">2023 – 2025</div>
+            <div class="event">Military Service for Public Interest (Suwon, South Korea)</div>
+          </li>
+          <li>
+            <div class="date">2021 – 2023</div>
+            <div class="event">The Cooper Union (New York, USA)</div>
+          </li>
+          
+          <li>
+            <div class="date">2017 – 2021</div>
+            <div class="event">Shanghai American School (Shanghai, China)</div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="socials">
+      <h2>Socials & Contact</h2>
+      <div class="socials-container">
+        <a href="mailto:seokwoo.chung@cooper.edu" class="social-link">
+          <i class="fas fa-envelope"></i><span>Email</span>
+        </a>
+        <a href="https://linkedin.com/in/ryan-seokwoo-chung" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin"></i><span>LinkedIn</span>
+        </a>
+        <a href="https://github.com/seokw-Ryan" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-github"></i><span>GitHub</span>
+        </a>
+        <a href="https://www.instagram.com/seokwoo_ryan" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-instagram"></i><span>Instagram</span>
+        </a>
+        <a href="https://x.com/ryan_chung_swc" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-x-twitter"></i><span>Twitter</span>
+        </a>
+        <a href="https://medium.com/@seokwoo.chung130" class="social-link" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-medium"></i><span>Medium</span>
+        </a>
+      </div>
+    </section>
+
   </main>
 
-  <script>
-    // Remove the dropdown toggle script since it's no longer needed
-    // Keep any other necessary scripts
-  </script>
 </body>
 </html>
