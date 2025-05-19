@@ -14,6 +14,7 @@
       background: #000;
       color: #fff;
       font-family: sans-serif;
+      position: relative; /* for absolutely positioned profile image */
     }
     a {
       color: #fff;
@@ -22,6 +23,17 @@
     }
     a:hover {
       color: #ddd;
+    }
+
+    .profile-image {
+      position: absolute;
+      top: 1rem;
+      right: 2rem;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
     }
 
     /* Sidebar */
@@ -131,6 +143,7 @@
 <body>
 
   <aside class="sidebar">
+    <img src="profile_image_forest.png" alt="Profile Image" class="profile-image">
     <nav>
       <ul>
         <li><a href="#overview">Overview</a></li>
@@ -275,7 +288,6 @@
             <div class="date">2021 – 2023</div>
             <div class="event">The Cooper Union (New York, USA)</div>
           </li>
-          
           <li>
             <div class="date">2017 – 2021</div>
             <div class="event">Shanghai American School (Shanghai, China)</div>
