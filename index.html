@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ryan Chung</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
       background-color: #000;
@@ -46,9 +48,10 @@
     }
 
     .profile-image {
-      width: 150px;
-      height: 150px;
-      border-radius: 50%;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      border-radius: 8px;
       object-fit: cover;
       border: 2px solid #fff;
     }
@@ -91,10 +94,9 @@
 
     @media (max-width: 600px) {
       .profile-image {
-        width: 120px;
-        height: 120px;
+        max-width: 100%;
       }
-      
+
       .description {
         font-size: 1rem;
       }
@@ -111,14 +113,18 @@
     }
   </style>
 </head>
+
 <body>
   <main>
     <div class="profile-container">
-      <img src="profile_image.png" alt="Ryan Chung" class="profile-image">
+      <img src="nyc.jpg" alt="NYC" class="profile-image">
     </div>
 
     <div class="description">
-      <p>I'm an Electrical Engineering student at Cooper Union studying the information-theoretic foundations of physical and computational intelligence, bridging rigorous mathematics with high-performance systems and compiler design. I build infrastructure to understand the fundamental limits of what computational systems can learn and process - proving theoretical bounds while engineering the tools that measure and approach them.</p>
+      <p>I'm an Electrical Engineering student at Cooper Union studying the information-theoretic foundations of
+        physical and computational intelligence, bridging rigorous mathematics with high-performance systems and
+        compiler design. I build infrastructure to understand the fundamental limits of what computational systems can
+        learn and process - proving theoretical bounds while engineering the tools that measure and approach them.</p>
     </div>
 
     <nav class="nav-buttons">
@@ -132,4 +138,5 @@
     </nav>
   </main>
 </body>
+
 </html>
