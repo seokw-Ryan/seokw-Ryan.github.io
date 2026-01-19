@@ -69,16 +69,21 @@
     .socials-container {
       margin: 2rem 0;
       width: 100%;
-      max-width: 600px;
+      max-width: 900px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
     }
 
     .social-link {
       display: flex;
       align-items: center;
-      padding: 1.5rem;
-      margin: 1rem 0;
+      padding: 0.9rem 1.2rem;
       border: 1px solid #000;
       transition: background-color 0.2s ease;
+      color: #000;
+      text-decoration: none;
     }
 
     .social-link:hover {
@@ -87,9 +92,14 @@
 
     .social-link i {
       font-size: 2rem;
-      margin-right: 1.5rem;
+      margin-right: 0.8rem;
       width: 40px;
       text-align: center;
+      color: #000;
+    }
+
+    .social-link span {
+      color: #000;
     }
   </style>
 </head>
@@ -97,10 +107,6 @@
   <header>
     <h1>Social Links</h1>
   </header>
-
-  <nav class="nav-buttons">
-    <a href="index.html">Home</a>
-  </nav>
 
   <main>
     <div class="socials-container">
@@ -126,5 +132,8 @@
       </a>
     </div>
   </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Home</a>
+  </nav>
 </body>
 </html>
