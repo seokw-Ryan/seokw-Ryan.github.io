@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Timeline - Ryan Chung</title>
   <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
     /* Common styles shared across all pages */
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: "Times New Roman", Times, serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
       line-height: 1.6;
     }
 
@@ -31,11 +39,11 @@
     .nav-buttons a {
       text-decoration: none;
       font-size: clamp(0.8rem, 1.8vw, 1rem);
-      color: #fff;
-      border: 1px solid #fff;
+      color: var(--text-color);
+      border: 1px solid #000;
       padding: 0.5rem 1rem;
       white-space: nowrap;
-      background-color: #000;
+      background-color: var(--bg-color);
       transition: all 0.2s ease;
       width: 220px;
       text-align: center;
@@ -43,7 +51,8 @@
     }
 
     .nav-buttons a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #000;
+      color: var(--bg-color);
     }
 
     /* Common header styles */
@@ -55,6 +64,7 @@
     }
 
     header h1 {
+      font-family: var(--font-serif);
       font-size: clamp(1.5rem, 5vw, 3rem);
       margin-bottom: 0.3rem;
     }
@@ -105,40 +115,14 @@
     }
 
     .timeline h2 {
+      font-family: var(--font-serif);
       font-size: 1.5rem;
       margin-bottom: 1.5rem;
       text-align: center;
     }
 
-    .timeline-container {
-      position: relative;
-      padding-left: 2rem;
-    }
-
-    .timeline-container::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 7px;
-      height: 100%;
-      width: 2px;
-      background-color: #fff;
-    }
-
     .timeline-item {
       margin-bottom: 2rem;
-      position: relative;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -2rem;
-      top: 0.5rem;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: #fff;
     }
 
     .timeline-date {
@@ -155,6 +139,7 @@
     .nav-buttons {
       margin-top: auto;
       margin-bottom: 1rem;
+      justify-content: center;
     }
 
     /* Media Queries */
@@ -184,16 +169,6 @@
         font-size: 1.3rem;
       }
       
-      .timeline-container {
-        padding-left: 1.5rem;
-      }
-      
-      .timeline-item::before {
-        left: -1.5rem;
-        width: 12px;
-        height: 12px;
-      }
-      
       .timeline-date {
         font-size: 1rem;
       }
@@ -202,14 +177,19 @@
 </head>
 <body>
   <header>
-    <h1>Timeline</h1>
+    <h1>timeline</h1>
   </header>
 
   <main>
     <section class="timeline">
       <article class="timeline-item">
-        <h2>2017–2021</h2>
-        <p>Shanghai American School (Shanghai, China)</p>
+        <h2>2025–Present</h2>
+        <p>The Cooper Union for the Advancement of Science and Art (New York, USA)</p>
+      </article>
+
+      <article class="timeline-item">
+        <h2>2023–2025</h2>
+        <p>Military Service for Public Interest (Suwon, South Korea)</p>
       </article>
 
       <article class="timeline-item">
@@ -218,17 +198,13 @@
       </article>
 
       <article class="timeline-item">
-        <h2>2023–2025</h2>
-        <p>Military Service for Public Interest (Suwon, South Korea)</p>
+        <h2>2017–2021</h2>
+        <p>Shanghai American School (Shanghai, China)</p>
       </article>
     </section>
-    <!-- Navigation back to Home and other pages -->
+    <!-- Navigation back to Home -->
     <nav class="nav-buttons">
         <a href="index.html">Home</a>
-        <a href="timeline.html">Timeline</a>
-        <a href="technical_skills.html">Technical Skills and Tools</a>
-        <a href="projects.html">Projects</a>
-        <a href="blog.html">Blog</a>
     </nav>
   </main>
 </body>

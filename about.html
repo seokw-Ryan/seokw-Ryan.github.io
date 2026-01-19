@@ -6,12 +6,20 @@
   <title>About Ryan Chung</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: "Times New Roman", Times, serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
       line-height: 1.6;
       height: 100vh;
       overflow: hidden;
@@ -32,11 +40,11 @@
     .nav-buttons a {
       text-decoration: none;
       font-size: clamp(0.8rem, 1.8vw, 1rem);
-      color: #fff;
-      border: 1px solid #fff;
+      color: var(--text-color);
+      border: 1px solid #000;
       padding: 0.5rem 1rem;
       white-space: nowrap;
-      background-color: #000;
+      background-color: var(--bg-color);
       transition: all 0.2s ease;
       width: 220px;
       text-align: center;
@@ -44,7 +52,8 @@
     }
 
     .nav-buttons a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #000;
+      color: var(--bg-color);
     }
 
     header {
@@ -56,6 +65,7 @@
     }
 
     header h1 {
+      font-family: var(--font-serif);
       font-size: clamp(1.5rem, 5vw, 3rem);
       margin-bottom: 0.3rem;
     }
@@ -67,7 +77,8 @@
       padding: 0.5rem;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      min-height: 100vh;
+      justify-content: flex-start;
       align-items: center;
       position: relative;
     }
@@ -83,14 +94,21 @@
       padding: 0.5rem 0;
     }
 
+    .nav-buttons {
+      margin-top: auto;
+      margin-bottom: 1rem;
+      justify-content: center;
+    }
+
     .about {
-      text-align: center;
+      text-align: left;
       margin: 0 auto;
       max-width: 800px;
       padding: 0.5rem;
     }
 
     .about h2 {
+      font-family: var(--font-serif);
       font-size: 1.5rem;
       margin-top: 1.5rem;
       margin-bottom: 0.5rem;
@@ -136,29 +154,54 @@
 </head>
 <body>
   <header>
-    <h1>About Me</h1>
+    <h1>whoami</h1>
   </header>
 
   <main>
     <section class="about">
-      <h2>Education</h2>
-      <p>Bachelor of Engineering - BE, Electrical and Electronics Engineering<br>
-         Minor in Mathematics and Computer Science
-      </p>
-      
-      <h2>Who I Am</h2>
       <p>
-        Aspiring AI hardware engineer with a passion for low-level programming, compilers, and quantum computing.
-        Currently building expertise through hands-on projects in AI agents and robotics.
-        Firm believer in the importance of compute and electricity for humanity.
+        I'm an undergraduate at The Cooper Union, nominally majoring in Electrical Engineering, though the "major"
+        part feels less like a fenced yard and more like the particular set of tools I've decided to keep closest
+        to hand. I came to EE the way people sometimes come to a new city: not because the old place was bad,
+        exactly, but because the street map here seems to contain more of the roads I keep trying to drive on:
+        computation, signals, systems, the whole strange business of turning the world into representations and
+        then doing something useful (or at least illuminating) with those representations.
+      </p>
+      <p>
+        One durable aspect of me is the desire to understand what's going on, and then to apply that understanding
+        in a way that touches reality, ideally without breaking too many things in the process. Which is why I keep
+        circling intelligence and simulation: intelligence as the question of how behavior can look like "knowing,"
+        and simulation as the disciplined daydream where you can build a world, perturb it, measure it, and learn
+        what survives contact with constraints.[1] Lately I've been learning more about computation, what it costs,
+        what it buys, what it can't buy, and how it seems to rhyme with intelligence in ways that start to feel
+        less like metaphor and more like physics.[2]
+      </p>
+      <p>
+        I also think EE is going to be the central terrain, no matter what the headline says the future is about,
+        because everything ends up as energy, information, and hardware somewhere. That belief is part of why I
+        switched from mechanical to electrical: the questions I wanted to ask kept sounding like circuits, not gears.
+      </p>
+      <p>
+        And, if I'm being honest in the slightly embarrassing way a "whoami" demands, my purpose is partly to take
+        advantage, gratefully, of being alive at a time when so many human feats are already built and so much
+        knowledge is just... there, waiting, accumulated; and to balance all that engineered brilliance with the
+        other kind of brilliance, the natural kind, the kind that doesn't care whether you can derive it, only
+        whether you can notice it. And yes, I did ask ChatGPT to write this like David Foster Wallace (which is
+        either an admission of outsourcing, or an attempt at honesty-by-preemptive-confession, or both, depending
+        on how charitable you're feeling).
+      </p>
+      <p>
+        [1] Also: simulation is where you can fail cheaply and frequently, which is a very underrated educational
+        privilege.
+      </p>
+      <p>
+        [2] Information theory keeps showing up like an uninvited guest who is nevertheless always right about the
+        seating arrangement.
       </p>
     </section>
 
     <nav class="nav-buttons">
       <a href="index.html">Home</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="technical_skills.html">Technical Skills and Tools</a>
-      <a href="projects.html">Projects</a>
     </nav>
   </main>
 </body>

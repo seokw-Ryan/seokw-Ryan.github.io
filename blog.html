@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog</title>
   <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
     /* Common styles shared across all pages */
     html, body {
       margin: 0;
       padding: 0;
-      background-color: #000;
-      color: #fff;
-      font-family: "Times New Roman", Times, serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
       line-height: 1.6;
     }
 
@@ -31,11 +39,11 @@
     .nav-buttons a {
       text-decoration: none;
       font-size: clamp(0.8rem, 1.8vw, 1rem);
-      color: #fff;
-      border: 1px solid #fff;
+      color: var(--text-color);
+      border: 1px solid #000;
       padding: 0.5rem 1rem;
       white-space: nowrap;
-      background-color: #000;
+      background-color: var(--bg-color);
       transition: all 0.2s ease;
       width: 220px;
       text-align: center;
@@ -43,7 +51,8 @@
     }
 
     .nav-buttons a:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #000;
+      color: var(--bg-color);
     }
 
     /* Common header styles */
@@ -55,6 +64,7 @@
     }
 
     header h1 {
+      font-family: var(--font-serif);
       font-size: clamp(1.5rem, 5vw, 3rem);
       margin-bottom: 0.3rem;
     }
@@ -64,9 +74,11 @@
       padding: 20px;
       max-width: 900px;
       margin: 0 auto;
-      height: auto;
+      min-height: 100vh;
       overflow-y: auto;
       overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
     html {
@@ -75,7 +87,8 @@
     }
 
     h1, h2, h3 {
-      color: #fff;
+      font-family: var(--font-serif);
+      color: var(--text-color);
     }
 
     h1 {
@@ -102,33 +115,34 @@
     }
 
     .section {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(0, 0, 0, 0.03);
       padding: 15px 20px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
     }
 
     .back-link {
       display: inline-block;
       margin-bottom: 20px;
-      color: #fff;
+      color: var(--text-color);
       text-decoration: none;
-      border: 1px solid #fff;
+      border: 1px solid #000;
       padding: 0.5rem 1rem;
       transition: all 0.2s ease;
     }
 
     .back-link:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #000;
+      color: var(--bg-color);
     }
 
     strong {
-      color: #fff;
+      color: var(--text-color);
     }
 
     em {
-      color: #ccc;
+      color: rgba(0, 0, 0, 0.7);
     }
 
     /* Blog navigation styles */
@@ -142,8 +156,8 @@
     
     .blog-nav button {
       background-color: transparent;
-      border: 1px solid #fff;
-      color: #fff;
+      border: 1px solid #000;
+      color: var(--text-color);
       padding: 0.5rem 1rem;
       cursor: pointer;
       font-size: 1rem;
@@ -151,11 +165,12 @@
     }
     
     .blog-nav button:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #000;
+      color: var(--bg-color);
     }
     
     .blog-nav button.active {
-      background-color: rgba(255, 255, 255, 0.2);
+      background-color: rgba(0, 0, 0, 0.08);
     }
     
     .blog-content {
@@ -173,8 +188,8 @@
     .back-button {
       margin-bottom: 1rem;
       background-color: transparent;
-      border: 1px solid #fff;
-      color: #fff;
+      border: 1px solid #000;
+      color: var(--text-color);
       padding: 0.3rem 0.8rem;
       cursor: pointer;
       font-size: 0.9rem;
@@ -190,7 +205,9 @@
     }
 
     .nav-buttons {
-      margin-top: 2rem;
+      margin-top: auto;
+      margin-bottom: 1rem;
+      justify-content: center;
     }
 
     /* Common media queries */
@@ -211,7 +228,7 @@
   </style>
 </head>
 <body>
-  <main>
+  <main style="flex: 1;">
     <section class="blog">
       <h2>Blog</h2>
       
@@ -277,9 +294,6 @@
 
     <nav class="nav-buttons">
       <a href="index.html">Home</a>
-      <a href="timeline.html">Timeline</a>
-      <a href="technical_skills.html">Technical Skills and Tools</a>
-      <a href="projects.html">Projects</a>
     </nav>
   </main>
 

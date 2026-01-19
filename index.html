@@ -17,6 +17,8 @@
 
     html {
       scroll-behavior: smooth;
+      height: 100%;
+      overflow: hidden;
     }
 
     body {
@@ -27,58 +29,24 @@
       font-family: var(--font-mono);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     /* Layout */
     .layout-container {
+      width: 100%;
       display: flex;
-      max-width: 1400px;
-      margin: 0 auto;
-      position: relative;
+      justify-content: center;
     }
 
     main {
-      flex: 1;
-      padding: 4rem 2rem;
+      padding: 2rem;
       max-width: 900px;
-    }
-
-    /* Sidebar Navigation */
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      position: sticky;
-      top: 0;
-      padding: 4rem 2rem;
-      display: flex;
-      flex-direction: column;
-      border-right: 1px solid rgba(0, 0, 0, 0.05);
-      background-color: var(--bg-color);
-      /* Ensure it covers content if needed */
-    }
-
-    .nav-links {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-color);
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      position: relative;
-      display: inline-block;
-      transition: opacity 0.2s;
-    }
-
-    .nav-links a:hover {
-      opacity: 0.6;
-      text-decoration: underline;
+      text-align: center;
     }
 
     /* Typography */
@@ -116,12 +84,13 @@
       margin-bottom: 1.5rem;
       font-size: 1.05rem;
       max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Sections */
     section {
-      margin-bottom: 6rem;
-      scroll-margin-top: 4rem;
+      margin-bottom: 0;
     }
 
     /* Profile Image */
@@ -130,9 +99,10 @@
       height: auto;
       border-radius: 4px;
       margin-bottom: 2rem;
-      filter: grayscale(100%);
-      /* Optional: makes it fit the bw theme better */
       border: 1px solid #000;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     /* Lists */
@@ -177,6 +147,15 @@
       display: inline-block;
     }
 
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
     .action-buttons a:hover {
       background-color: #000;
       color: var(--bg-color);
@@ -201,33 +180,6 @@
 
     /* Mobile Responsive */
     @media (max-width: 900px) {
-      .layout-container {
-        flex-direction: column-reverse;
-        /* Nav at top/bottom? Let's put nav at top */
-      }
-
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-left: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding: 1rem;
-        flex-direction: row;
-        justify-content: center;
-      }
-
-      .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-      }
-
-      .nav-links a {
-        font-size: 1rem;
-      }
-
       main {
         padding: 2rem 1rem;
       }
@@ -242,201 +194,23 @@
 <body>
 
   <div class="layout-container">
-    <aside class="sidebar">
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#opensource">Open Source</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#timeline">Timeline</a></li>
-          <li><a href="#socials">Connect</a></li>
-        </ul>
-      </nav>
-    </aside>
-
     <main>
-      <!-- Home / Intro -->
+      <!-- Home / Hub -->
       <section id="home">
-        <h1>Ryan Chung</h1>
+        <h1>Ryan Chung (Seokwoo)</h1>
         <img src="nyc.jpg" alt="Ryan Chung" class="profile-image">
 
-        <p style="font-size: 1.15rem; margin-bottom: 1rem;">
-          <strong>EE student building embodied AI systems (simulation → real robots) with a strong systems/performance focus.</strong>
+        <p style="font-size: 1.15rem; margin-bottom: 2rem;">
+          Electrical Engineering Student at Cooper Union
         </p>
 
-        <p style="margin-bottom: 2rem;">
-          Linux kernel (LFX) + ROS autonomy/SLAM. Interested in simulation-based learning, real-time pipelines, and efficient deployment.
-        </p>
-
-        <!-- Action Buttons -->
-        <div class="action-buttons" style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;">
+        <div class="action-buttons">
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
           <a href="resume.html">Resume</a>
-          <a href="https://github.com/seokw-Ryan" target="_blank">GitHub</a>
-          <a href="#projects">Selected Projects</a>
-          <a href="mailto:seokwoo.chung@cooper.edu">Email</a>
-        </div>
-
-        <!-- Proof Strip -->
-        <div style="background-color: rgba(0,0,0,0.03); padding: 1rem; border-left: 2px solid #000; margin-bottom: 2rem;">
-          <ul style="margin: 0; padding-left: 0; list-style: none;">
-            <li style="margin-bottom: 0.5rem; padding-left: 0;">• Linux Kernel LFX Mentorship (upstream contributions)</li>
-            <li style="margin-bottom: 0.5rem; padding-left: 0;">• ROS drone control (Crazyflie autonomous flight)</li>
-            <li style="margin-bottom: 0; padding-left: 0;">• IGVC autonomy (SLAM / planning)</li>
-          </ul>
-        </div>
-
-        <!-- Intro Paragraph -->
-        <p>
-          I'm an Electrical Engineering student at The Cooper Union ('27) with a minor in Math & CS. I work at the intersection of <strong>robotics, simulation, and performance-critical software</strong>—building systems that can learn in simulation and run reliably on real hardware.
-        </p>
-
-        <p>
-          I see computation and algorithms as equally important to unlocking the next phase of humanity. Mathematics is the language through which we understand physical systems and learning.
-        </p>
-      </section>
-
-      <!-- Projects -->
-      <section id="projects">
-        <h2>Selected Projects</h2>
-
-        <h3>Inference Latency + Power Benchmarking (CPU/GPU)</h3>
-        <p>
-          Automated benchmarking pipeline across model sizes and batch configurations; logged latency, memory, and power consumption (RAPL + GPU telemetry). Produced reproducible plots and CSV outputs for performance comparisons and regression tracking.
-          <br><em>Stack: PyTorch, ONNX, Python, RAPL, Matplotlib, GitHub</em>
-        </p>
-
-        <h3>CPU/iGPU Microbenchmarks + Linux Profiling Report</h3>
-        <p>
-          Developed C/C++ microbenchmarks to study instruction throughput, cache behavior, and thermal limits on Intel hardware. Profiled with <code>perf</code>, <code>intel_gpu_top</code>, and system tools; summarized findings with performance plots and tuning recommendations.
-          <br><em>Stack: C/C++, perf, RAPL, vmstat, mpstat, Linux</em>
-        </p>
-
-        <div style="background-color: rgba(0,0,0,0.03); padding: 1rem; margin-top: 1.5rem; border-left: 2px solid #000;">
-          <p style="margin: 0; font-style: italic;">
-            <strong>Note:</strong> Currently developing an end-to-end embodied AI project combining simulation-based training with real-time deployment on physical hardware. Stay tuned for updates.
-          </p>
-        </div>
-      </section>
-
-      <!-- Experience -->
-      <section id="experience">
-        <h2>Experience</h2>
-
-        <div class="timeline-item">
-          <div class="timeline-date">June 2025 – November 2025</div>
-          <h3>Linux Kernel LFX Mentorship Mentee</h3>
-          <p>Remote</p>
-          <ul>
-            <li>Contributed upstreamable Linux kernel changes through LFX mentorship; collaborated with maintainers and iterated through review cycles.</li>
-            <li>Modernized sysfs <code>show()</code> paths using <code>sysfs_emit/sysfs_emit_at</code> to align with current kernel guidance (e.g., <code>slots_show</code>, <code>irq_handlers_show</code>).</li>
-            <li>Used <code>perf</code>, <code>ftrace</code>, tracepoints, and <code>fprobe</code> to analyze execution paths and validate behavior.</li>
-            <li>Triaged <code>syzbot</code> reports; reproduced issues and validated builds via Kconfig/Make and QEMU boots.</li>
-            <li><em>Links:</em> <a href="https://github.com/seokw-Ryan" target="_blank">GitHub</a> | Patch series & commits (coming soon)</li>
-          </ul>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">June 2023 – August 2023</div>
-          <h3>ROS/Software Developer – Drone Control</h3>
-          <p>The Cooper Union, NYC</p>
-          <ul>
-            <li>Built a ROS-based autonomy stack for Crazyflie nano-quadcopters; fused IMU, optical flow, and range sensors for real-time state estimation and control.</li>
-            <li>Tuned Kalman filters in embedded C++ firmware to improve stability and responsiveness during autonomous flight.</li>
-          </ul>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">Fall 2021 – Spring 2023</div>
-          <h3>Autonomous Vehicles (IGVC)</h3>
-          <p>The Cooper Union, NYC</p>
-          <ul>
-            <li>Developed LiDAR-based SLAM and obstacle detection modules; integrated with ROS navigation and planning pipeline for the International Ground Vehicle Competition.</li>
-            <li>Implemented path planning algorithms (A*, RRT) in C++ and Python.</li>
-          </ul>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">June 2022 – August 2022</div>
-          <h3>Engineering Volunteer</h3>
-          <p>Centro de Paz Bárbara Ford (NGO), Guatemala</p>
-          <ul>
-            <li>Deployed Arduino sensors (ESP8266 + DS18B20) to map thermal loss; quantified 23% heat-lamp profit loss.</li>
-            <li>Designed firewood-powered hydronic heating prototype with recycled-material insulation; piloted by local farms.</li>
-            <li>Co-authored paper presented at 2023 IEEE GHTC. <a href="https://ieeexplore.ieee.org/document/10354950" target="_blank">View paper</a></li>
-          </ul>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-date">October 2023 – June 2025</div>
-          <h3>Public Service Worker</h3>
-          <p>Mandatory Military Service, Gyeonggi, South Korea – Served in regional public-interest projects.</p>
-        </div>
-      </section>
-
-      <!-- Open Source -->
-      <section id="opensource">
-        <h2>Open Source</h2>
-        <p>
-          Contributions to real-world systems and ecosystems:
-        </p>
-        <ul>
-          <li><strong>Linux Kernel (LFX):</strong> Upstream patches modernizing sysfs paths and triaging kernel bugs. <a href="https://github.com/seokw-Ryan" target="_blank">GitHub</a> | Patch links (coming soon)</li>
-          <li><strong>ROS Packages:</strong> Contributions to ROS-based autonomy and SLAM modules for drone and ground vehicle projects.</li>
-          <li><strong>Future:</strong> Planning contributions to simulation frameworks (MuJoCo, Isaac) and ML deployment tooling (JAX, ONNX).</li>
-        </ul>
-      </section>
-
-      <!-- Skills -->
-      <section id="skills">
-        <h2>Technical Skills</h2>
-        <ul>
-          <li><strong>Core:</strong> Python, C/C++, Linux, Git, Docker, ROS, Shell/Bash</li>
-          <li><strong>Robotics:</strong> SLAM, perception, planning (A*, RRT), sensor fusion, OpenCV, PCL</li>
-          <li><strong>Performance/Systems:</strong> perf, ftrace, QEMU, profiling, benchmarking, RAPL, kernel debugging</li>
-          <li><strong>ML/Deployment:</strong> PyTorch, ONNX, NumPy, inference optimization</li>
-          <li><strong>Hardware (Familiar):</strong> Verilog, VHDL, embedded firmware (C/C++)</li>
-        </ul>
-      </section>
-
-      <!-- Timeline -->
-      <section id="timeline">
-        <h2>Timeline</h2>
-        <div class="timeline-item">
-          <div class="timeline-date">2025 – Present</div>
-          <p>The Cooper Union (New York, USA)</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2023 – 2025</div>
-          <p>Military Service for Public Interest (Suwon, South Korea)</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2021 – 2023</div>
-          <p>The Cooper Union (New York, USA)</p>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-date">2017 – 2021</div>
-          <p>Shanghai American School (Shanghai, China)</p>
-        </div>
-      </section>
-
-      <!-- Socials -->
-      <section id="socials">
-        <h2>Connect</h2>
-        <p>
-          Feel free to reach out to me via email or social media.
-        </p>
-        <div class="social-links">
-          <a href="mailto:seokwoo.chung@cooper.edu" title="Email"><i class="fas fa-envelope"></i></a>
-          <a href="https://linkedin.com/in/ryan-seokwoo-chung" target="_blank" title="LinkedIn"><i
-              class="fab fa-linkedin"></i></a>
-          <a href="https://github.com/seokw-Ryan" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-          <a href="https://www.instagram.com/seokwoo_ryan" target="_blank" title="Instagram"><i
-              class="fab fa-instagram"></i></a>
-          <a href="https://x.com/seokwoochung" target="_blank" title="X"><i class="fab fa-x-twitter"></i></a>
-          <a href="https://medium.com/@seokwoo.chung130" target="_blank" title="Medium"><i
-              class="fab fa-medium"></i></a>
+          <a href="blog.html">Writing</a>
+          <a href="timeline.html">Timeline</a>
+          <a href="socials.html">Connect</a>
         </div>
       </section>
     </main>
