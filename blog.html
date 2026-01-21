@@ -145,56 +145,6 @@
       color: rgba(0, 0, 0, 0.7);
     }
 
-    /* Blog navigation styles */
-    .blog-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 2rem;
-    }
-    
-    .blog-nav button {
-      background-color: transparent;
-      border: 1px solid #000;
-      color: var(--text-color);
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: all 0.2s ease;
-    }
-    
-    .blog-nav button:hover {
-      background-color: #000;
-      color: var(--bg-color);
-    }
-    
-    .blog-nav button.active {
-      background-color: rgba(0, 0, 0, 0.08);
-    }
-    
-    .blog-content {
-      width: 100%;
-    }
-    
-    .year-section, .month-section, .posts-section {
-      display: none;
-    }
-    
-    .visible {
-      display: block;
-    }
-    
-    .back-button {
-      margin-bottom: 1rem;
-      background-color: transparent;
-      border: 1px solid #000;
-      color: var(--text-color);
-      padding: 0.3rem 0.8rem;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
-
     .blog {
       text-align: center;
       margin-top: 2rem;
@@ -202,6 +152,31 @@
 
     .blog h2 {
       margin-bottom: 2rem;
+    }
+
+    .post-card {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      text-align: left;
+    }
+
+    .post-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .post-card h3 a {
+      color: #000;
+      text-decoration: none;
+    }
+
+    .post-card h3 a:hover {
+      text-decoration: underline;
+    }
+
+    .post-date {
+      margin: 0 0 1rem;
+      color: rgba(0, 0, 0, 0.7);
     }
 
     .nav-buttons {
@@ -230,66 +205,15 @@
 <body>
   <main style="flex: 1;">
     <section class="blog">
-      <h2>Blog</h2>
-      
-      <!-- Year selection -->
-      <div class="blog-content">
-        <div id="years" class="year-section visible">
-          <div class="blog-nav">
-            <button class="year-btn" data-year="2025">2025</button>
-            <!-- More years can be added here as needed -->
-          </div>
-        </div>
-        
-        <!-- Month selection (initially hidden) -->
-        <div id="months-2025" class="month-section">
-          <button class="back-button" onclick="showYears()">← Back to Years</button>
-          <div class="blog-nav">
-            <button class="month-btn" data-year="2025" data-month="01">January</button>
-            <button class="month-btn" data-year="2025" data-month="02">February</button>
-            <button class="month-btn" data-year="2025" data-month="03">March</button>
-            <button class="month-btn" data-year="2025" data-month="04">April</button>
-            <button class="month-btn" data-year="2025" data-month="05">May</button>
-            <button class="month-btn" data-year="2025" data-month="06">June</button>
-            <button class="month-btn" data-year="2025" data-month="07">July</button>
-            <button class="month-btn" data-year="2025" data-month="08">August</button>
-            <button class="month-btn" data-year="2025" data-month="09">September</button>
-            <button class="month-btn" data-year="2025" data-month="10">October</button>
-            <button class="month-btn" data-year="2025" data-month="11">November</button>
-            <button class="month-btn" data-year="2025" data-month="12">December</button>
-          </div>
-        </div>
-        
-        <!-- Blog posts sections (initially hidden) -->
-        <!-- Example for April 2025 -->
-        <div id="posts-2025-04" class="posts-section">
-          <button class="back-button" onclick="showMonths('2025')">← Back to Months</button>
-          <h3>April 2025</h3>
-          <div class="blog-posts">
-            <!-- April 16, 2025 blog post -->
-            <article class="blog-post">
-              <h3>Daily Diary</h3>
-              <p class="blog-date">April 16, 2025 - Wednesday</p>
-              <p class="blog-excerpt">
-                Daily activities including a 2km run, studying FPGA, watching Qiskit videos, and reflections on the Korean stock market. Notes on NAND gates, De Morgan's Law, and Quartus Prime.
-              </p>
-              <a href="blog-posts/2025/04/2025-04-16.html" class="read-more">Read more</a>
-            </article>
-            
-            <!-- Example blog post - Remove once you have real posts -->
-            <article class="blog-post">
-              <h3>First Blog Post</h3>
-              <p class="blog-date">April 1, 2025</p>
-              <p class="blog-excerpt">
-                This is an example of my first blog post. Here I'll share my thoughts and experiences of the day.
-              </p>
-              <a href="#" class="read-more">Read more</a>
-            </article>
-            
-            <!-- More blog posts can be added here -->
-          </div>
-        </div>
-      </div>
+      <h2>Writing</h2>
+      <article class="post-card">
+        <h3>
+          <a href="writing/the-rise-of-specialized-computing-architectures.html">
+            The Rise of Specialized Computing Architectures
+          </a>
+        </h3>
+        <div class="post-date">January 20, 2026</div>
+      </article>
     </section>
 
     <nav class="nav-buttons">
@@ -297,50 +221,5 @@
     </nav>
   </main>
 
-  <script>
-    // Show year selection
-    function showYears() {
-      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
-        section.classList.remove('visible');
-      });
-      document.getElementById('years').classList.add('visible');
-    }
-    
-    // Show month selection for a specific year
-    function showMonths(year) {
-      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
-        section.classList.remove('visible');
-      });
-      document.getElementById(`months-${year}`).classList.add('visible');
-    }
-    
-    // Show posts for a specific year and month
-    function showPosts(year, month) {
-      document.querySelectorAll('.year-section, .month-section, .posts-section').forEach(section => {
-        section.classList.remove('visible');
-      });
-      document.getElementById(`posts-${year}-${month}`).classList.add('visible');
-    }
-    
-    // Add event listeners to buttons
-    document.addEventListener('DOMContentLoaded', function() {
-      // Year buttons
-      document.querySelectorAll('.year-btn').forEach(button => {
-        button.addEventListener('click', function() {
-          const year = this.dataset.year;
-          showMonths(year);
-        });
-      });
-      
-      // Month buttons
-      document.querySelectorAll('.month-btn').forEach(button => {
-        button.addEventListener('click', function() {
-          const year = this.dataset.year;
-          const month = this.dataset.month;
-          showPosts(year, month);
-        });
-      });
-    });
-  </script>
 </body>
 </html> 
