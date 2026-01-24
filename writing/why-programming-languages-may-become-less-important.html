@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Programming Languages May Become Less Important</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>Why Programming Languages May Become Less Important</h1>
+    <div class="post-date">January 24, 2026</div>
+    <article class="post-box">
+      <p>
+        AI is changing how we work, no matter who you are or what field you're in. Software engineering and
+        programming are among the domains feeling that shift most directly.
+      </p>
+      <p>
+        Right now, I see AI primarily as a tool. Maybe that changes in the future, but today it's something
+        programmers use to move faster: generating code, explaining unfamiliar concepts, finding bugs, writing
+        tests, and helping with documentation. The important part is that it accelerates development, and when
+        development accelerates, the shape of the work changes.
+      </p>
+      <p>
+        Traditionally, we've had many programming languages because different languages serve different purposes. C
+        and C++ have historically been foundational for embedded and systems-level development. They're fast, widely
+        understood, and have huge ecosystems, but they're also notorious for security and memory-safety pitfalls.
+        Meanwhile, languages like Java, JavaScript, SQL, Python, and Rust exist for good reasons too. Each has
+        evolved around particular use cases, tradeoffs, and communities.
+      </p>
+      <p>
+        Because of that, I don't think it makes sense to say one language is "best" in general. In a lot of ways,
+        languages are tools that evolved to match constraints in different environments.
+      </p>
+      <p>
+        But as AI-driven development accelerates, I expect two things to happen:
+      </p>
+      <p>
+        1. New languages (or major extensions of existing ones) will keep appearing, tailored to specific domains
+        and industries.
+      </p>
+      <p>
+        2. The importance of syntax will shrink, because AI will handle more of the translation between intent and
+        implementation.
+      </p>
+      <p>
+        In other words, we may not stop using programming languages, but we may stop thinking in them as much.
+      </p>
+      <p>
+        I see this as similar to what happened with assembly. We didn't exactly "delete" assembly from computing.
+        It's still there, and it still matters in certain contexts. But for most developers, it became less central
+        because higher-level abstractions took over. In the same way, I think today's mainstream programming
+        languages could become increasingly "background infrastructure", still real, still important, but less
+        visible in day-to-day work.
+      </p>
+      <p>
+        Of course, this doesn't mean expertise disappears. AI is not perfect. It makes mistakes, produces
+        incomplete solutions, and can hallucinate details, just like humans can. There will still be a strong need
+        for domain experts and language experts, especially in critical systems. If you're working on something like
+        the Linux kernel, you want people who deeply understand C, operating systems, performance tradeoffs, and
+        failure modes.
+      </p>
+      <p>
+        However, as AI improves at debugging, verification, code generation, and adaptation across languages, the
+        center of gravity shifts. The most valuable skill becomes less about knowing the exact syntax of a language
+        and more about system thinking: designing architectures, defining requirements, reasoning about constraints,
+        evaluating tradeoffs, anticipating failures, ensuring security, and aligning technical decisions with
+        real-world goals.
+      </p>
+      <p>
+        My guess is that over time, we'll move from "language thinking" to "system thinking." Languages won't
+        vanish, but they'll matter less than the ability to clearly specify what you want, validate what you got, and
+        design systems that work reliably in the real world.
+      </p>
+      <p>
+        And honestly, I think that's pretty interesting.
+      </p>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>
