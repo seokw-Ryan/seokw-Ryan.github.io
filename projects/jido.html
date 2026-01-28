@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jido - Ryan Chung</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .project-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .project-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .project-box h2 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-box h2:first-child {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-badges span {
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      font-size: 0.85rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>jido</h1>
+    <div class="project-date">January 2026 &mdash; Present</div>
+    <div class="tech-badges">
+      <span>Python</span>
+      <span>PyTorch</span>
+      <span>NVML</span>
+      <span>ROCm</span>
+      <span>oneAPI</span>
+    </div>
+    <article class="project-box">
+      <p>
+        jido (Korean for "map") is an ML systems toolkit that maps the
+        relationship between hardware, software backends, and kernel
+        performance. The goal is to remove the setup friction that comes with
+        benchmarking ML workloads across different machines: detecting what
+        hardware is available, discovering which inference backends are
+        installed, and running standardized benchmarks that produce comparable
+        results regardless of where they execute.
+      </p>
+
+      <h2>Hardware Detection</h2>
+      <p>
+        jido scans CPU capabilities (core counts, ISA flags like AVX-512 and
+        FMA), system memory, and GPUs across three vendors: NVIDIA via NVML
+        with nvidia-smi fallback, AMD via rocm-smi and amd-smi, and Intel via
+        sycl-ls. For NVIDIA GPUs it also pulls compute capability, SM count,
+        clock rates, and computes theoretical peak FP32 FLOPS and memory
+        bandwidth. Each machine gets a deterministic SHA-256 fingerprint
+        derived from its hardware profile, so benchmark results from the same
+        physical system are always grouped together.
+      </p>
+
+      <h2>Backend Discovery</h2>
+      <p>
+        On every run, jido probes the runtime environment for seven inference
+        backends&mdash;PyTorch, ONNX Runtime, vLLM, TensorRT, llama.cpp,
+        OpenVINO, and DeepSpeed&mdash;along with compilers (gcc, clang, nvcc,
+        hipcc, icx) and vendor tools. This lets the toolkit know what is
+        actually available to benchmark against, without requiring manual
+        configuration.
+      </p>
+
+      <h2>Benchmarking</h2>
+      <p>
+        The benchmark runner covers three core operations&mdash;matrix
+        multiplication, scaled dot-product attention, and 2D
+        convolution&mdash;each with multiple default problem sizes and three
+        data types (fp32, fp16, bf16). Every run records timing percentiles
+        (mean, median, p95, p99), peak memory allocation, GPU utilization via
+        NVML, TFLOPS throughput, and correctness deltas against a reference
+        kernel. Results are written to a structured JSON schema that includes
+        the full hardware scan, environment snapshot, and machine fingerprint,
+        making runs reproducible and cross-machine comparisons
+        straightforward.
+      </p>
+
+      <h2>What's Next</h2>
+      <ul>
+        <li>Parameter sweep expansion across problem sizes, dtypes, and batch dimensions</li>
+        <li>Cross-backend kernel benchmarks (Triton, TensorRT, ONNX Runtime execution providers)</li>
+        <li>Recommended-config generation from detected hardware profiles</li>
+        <li>Terminal-based reporting and visualization</li>
+        <li>NPU and FPGA detection</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../projects.html">Projects</a>
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>
