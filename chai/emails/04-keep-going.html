@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[CHAI] 04: Keep Going</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>[CHAI] 04: Keep Going</h1>
+    <div class="post-date">November 7, 2025</div>
+    <article class="post-box">
+      <p>Hi everyone.</p>
+      <p>I know this is that time of the semester when exams and projects seem to pile up at once. Just wanted to say to keep going: you've got this.</p>
+      <p>I understand it's tough to balance coursework with extracurriculars right now, and that's completely normal. But I also want to share something I've learned: the skills and expertise we build outside the classroom often become a huge asset. Whether it's through this club or other activities, consistently investing time in developing your abilities—even during busy periods—will set you apart in ways that matter more than you might realize right now. Hence, I encourage you to carve out some time to keep sharpening your edge.</p>
+      <p><strong>Quick note:</strong><br>
+        The Teams link I sent previously wasn't working. I have included another one below. All updates about our progress will be shared in the Teams chat.
+      </p>
+      <ul>
+        <li>[CHAI TEAm] Quantum Computing | Group Chat | Microsoft Teams</li>
+        <li>[CHAI TEAm] ICPC/Leetcode | Group Chat | Microsoft Teams</li>
+        <li>[CHAI Team] Kaggle | Group Chat | Microsoft Teams</li>
+        <li>[CHAI TEAm] Simulation/World Model | Group Chat | Microsoft Teams</li>
+        <li>[CHAI TEAm] Linux | Group Chat | Microsoft Teams</li>
+      </ul>
+      <p>Thank you and check out some news from this week below.</p>
+      <div class="signature">
+        Best regards,<br>
+        Seokwoo (Ryan) Chung<br>
+        The Cooper Union | Class of 2028<br>
+        Electrical Engineering Major
+      </div>
+
+      <h2>This Week's News</h2>
+      <ul>
+        <li>OpenAI signs a 7-year, $38B cloud/compute deal with AWS, securing "hundreds of thousands" of Nvidia GPUs.</li>
+        <li>Microsoft inks a $9.7B / 5-year contract with IREN to access Nvidia GB300 capacity at its Texas campus.</li>
+        <li>Nvidia CEO Jensen Huang: no active talks to sell Blackwell GPUs to China right now.</li>
+        <li>Meta pledges >$600B U.S. investment by 2028 focused on AI data centers and jobs.</li>
+        <li>EU AI Act: Commission considering grace periods/delays on key rules amid industry and U.S. pressure.</li>
+        <li>Apple ↔ Google: Apple reportedly nearing a ~$1B/year deal to use a custom Gemini model to power next-gen Siri.</li>
+        <li>UMG x Udio settle lawsuit; plan a licensed AI-music platform launching 2026 (artists opt-in, compensated).</li>
+        <li>Anthropic expands in Europe (Paris, Munich); Google in early talks to boost its Anthropic stake.</li>
+        <li>MiniMax-M2 (open-weights) tops open models on the Intelligence Index (61) with strong coding/agentic results.</li>
+        <li>OpenAI publishes Teen Safety Blueprint and announces 1M business customers using its products.</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Emails</a>
+    <a href="../index.html">CHAI</a>
+  </nav>
+</body>
+</html>

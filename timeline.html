@@ -120,6 +120,55 @@
       text-align: center;
     }
 
+    .daily-log {
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 1.5rem;
+    }
+
+    .daily-log:last-of-type {
+      border-bottom: none;
+    }
+
+    .daily-date {
+      font-family: var(--font-serif);
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      color: var(--accent-color);
+    }
+
+    .tasks-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .tasks-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .tasks-list li::before {
+      content: ">";
+      position: absolute;
+      left: 0;
+      color: var(--accent-color);
+      font-weight: bold;
+    }
+
+    .task-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.1rem 0.4rem;
+      margin-left: 0.5rem;
+      border: 1px solid var(--accent-color);
+      border-radius: 3px;
+      vertical-align: middle;
+    }
+
     .timeline-item {
       margin-bottom: 2rem;
     }
@@ -170,6 +219,18 @@
       
       .timeline-date {
         font-size: 1rem;
+      }
+
+      .daily-date {
+        font-size: 1rem;
+      }
+
+      .tasks-list li {
+        font-size: 0.85rem;
+      }
+
+      .task-tag {
+        font-size: 0.65rem;
       }
     }
   </style>

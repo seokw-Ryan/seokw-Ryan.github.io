@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[CHAI] 07: Ending the Semester</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>[CHAI] 07: Ending the Semester</h1>
+    <div class="post-date">December 5, 2025</div>
+    <article class="post-box">
+      <p>Hi everyone.</p>
+      <p>As we wrap up the semester, I wanted to share some updates and changes coming to club meetings.</p>
+      <ul>
+        <li>Starting next semester, we will be moving our club meetings to Thursday club hours</li>
+        <li>New Meeting Structure. This is not finalized but the plan is to implement more structured format
+          <ul>
+            <li>Weekly Timed Leetcode Sessions (~20min)</li>
+            <li>Paper Discussions: Dive into relevant research papers to deepen theoretical knowledge</li>
+            <li>Monthly Projects: Each month, we will implement a project based on one of the papers we discuss and push it to Github. This will give us tangible deliverables while strengthening our understanding.</li>
+          </ul>
+        </li>
+      </ul>
+      <p>Also, today's meeting was our last of the semester. Thank you all for your participation, and I wish you the best as you finish up your finals and projects.</p>
+      <div class="signature">
+        Best regards,<br>
+        Seokwoo (Ryan) Chung<br>
+        The Cooper Union | Class of 2028<br>
+        Electrical Engineering Major
+      </div>
+
+      <h2>Relevant News</h2>
+      <ul>
+        <li>AWS used re:Invent to roll out a big slate of AI+cloud updates, including Graviton5, Trainium3 UltraServers, and new agent-focused tooling.</li>
+        <li>Reuters reported AWS will use Nvidia NVLink Fusion in a future Trainium4 design as Amazon keeps scaling custom AI hardware.</li>
+        <li>Arm announced plans for a chip-design training facility in South Korea targeting ~1,400 specialists.</li>
+        <li>China's AI chipmaker Moore Threads reportedly surged on debut, underscoring China's push for domestic AI compute.</li>
+        <li>The semiconductor industry outlook stayed bullish: SIA cited WSTS projecting global chip sales nearing $1T in 2026.</li>
+        <li>The Verge reported OpenAI is pushing toward shipping GPT-5.2 as early as Dec 9, 2025 amid competitive pressure.</li>
+        <li>A bipartisan US Senate proposal ("SAFE CHIPS Act") would tighten/lock in advanced AI chip export licensing rules for certain countries for 30 months.</li>
+        <li>The EU signaled escalating antitrust scrutiny of Meta/WhatsApp's AI policy, including the possibility of interim measures.</li>
+        <li>Meta signed fresh AI licensing deals with major publishers (including CNN, Fox News, USA Today) to feed Meta AI with news content.</li>
+        <li>The New York Times sued Perplexity AI, alleging improper copying/scraping and raising issues around attribution and hallucinations.</li>
+        <li>Apple and Google issued another wave of spyware/cyber threat alerts; Apple said notifications went to users in 84 countries.</li>
+        <li>India considered always-on A-GPS location tracking on phones; Apple/Google/Samsung reportedly raised privacy/security objections.</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Emails</a>
+    <a href="../index.html">CHAI</a>
+  </nav>
+</body>
+</html>

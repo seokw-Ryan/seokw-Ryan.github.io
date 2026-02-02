@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[CHAI] 09: Week Recap & This Week's Focus</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>[CHAI] 09: Week Recap & This Week's Focus</h1>
+    <div class="post-date">February 2, 2026</div>
+    <article class="post-box">
+      <p>Hello everyone,</p>
+      <p>I hope you're all having a great start to the week. I wanted to recap a few key points from last week's meeting and share what we'll be focusing on this week.</p>
+
+      <h2>LeetCode Practice</h2>
+      <p>We discussed two valuable approaches for incorporating LeetCode into our meetings:</p>
+      <ul>
+        <li>Solving a problem together during the meeting</li>
+        <li>Having members present and explain their solutions</li>
+      </ul>
+      <p>Both options would be beneficial. For this week, we will try out the first option.</p>
+
+      <h2>Weekly Paper Discussions</h2>
+      <p>Every week (or biweekly) I'll be sharing interesting papers for us to explore as a club. If we find a paper particularly compelling, we can also attempt to implement it and see how far we get.</p>
+      <p><strong>This Week: World Models Paper</strong><br>
+        This week, we'll be diving into the World Models paper: <a href="https://huggingface.co/papers/2601.20540" style="color: #000;">https://huggingface.co/papers/2601.20540</a>
+      </p>
+      <p>Please review the paper before our meeting and prepare any questions you might have. We'll discuss the key concepts and determine whether implementation will require more than one week to complete.</p>
+
+      <h2>Competitions & Hackathons</h2>
+      <p>I'm excited to see the growing energy and participation. Here's what's happening:</p>
+      <ul>
+        <li>ICPC team: Meeting weekly outside of our Thursday 5-6 meetings</li>
+        <li>Hackathon team: Competing in the Nvidia Cosmos Cookoff competition</li>
+      </ul>
+      <p>If you're interested in participating in any hackathons or competitions through CHAI, please let me know and I'll help organize it.</p>
+
+      <h2>Leadership Updates</h2>
+      <p>The following members will join the leadership team: Paddy Yang, Zihan Zhao, Matthew Jeong, and Marco Chen.</p>
+      <p>Looking forward to seeing everyone this Thursday in room 101.</p>
+      <div class="signature">
+        Best regards,<br>
+        Seokwoo (Ryan) Chung<br>
+        The Cooper Union | Class of 2028<br>
+        Electrical Engineering Major
+      </div>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Emails</a>
+    <a href="../index.html">CHAI</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[CHAI] 05: One Month Remaining</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>[CHAI] 05: One Month Remaining</h1>
+    <div class="post-date">November 14, 2025</div>
+    <article class="post-box">
+      <p>Hi everyone,</p>
+      <p>Apologies for the delayed send—here's a quick recap of this week's meeting.</p>
+      <p>This week we covered some technical stuff for ICPC and Linux such as the dynamics of Linux patches and subsystems. The usual theme applies—stay consistent and keep at it. I know it's hard during the semester, but it's worth it.</p>
+      <p>One other thing I wanted to mention: I've been finding AI tools like ChatGPT pretty useful lately. Not for everything, but for certain things—like when I was trying to figure out better sleep habits or when to meditate. These models have read way more research than any of us ever could, so they can offer decent suggestions. Of course, I am not saying to rely on it heavily, but it might be worth experimenting with for things like habit-building or getting a second opinion. It's helped me, so figured I'd pass it along.</p>
+      <p>Have a good weekend.</p>
+      <div class="signature">
+        Best regards,<br>
+        Seokwoo (Ryan) Chung<br>
+        The Cooper Union | Class of 2028<br>
+        Electrical Engineering Major
+      </div>
+
+      <h2>This Week's News</h2>
+      <ul>
+        <li>Anthropic commits $50B to U.S. AI data centers with Fluidstack, escalating the global race for frontier-model compute capacity.</li>
+        <li>Microsoft knits its Fairwater sites into an "AI superfactory," treating multiple data centers as a single massive training cluster.</li>
+        <li>OpenAI launches GPT-5.1 with Instant/Thinking modes and richer customization, aiming to standardize high-end conversational AI.</li>
+        <li>Baidu debuts domestic M100/M300 AI chips and Tianchi supernodes, pushing China toward homegrown alternatives to Nvidia and AMD.</li>
+        <li>Meta signs a $3B, five-year AI cloud deal with Nebius, underscoring the rise of specialized "GPU neocloud" providers.</li>
+        <li>d-Matrix raises $275M at a multibillion valuation to scale inference-first AI chips as serving costs rival or exceed training.</li>
+        <li>CoreWeave plans up to $6B for a Pennsylvania AI data center, adding another large GPU hub to its fast-growing cloud footprint.</li>
+        <li>IBM introduces the Loon quantum chip and Nighthawk roadmap, aiming at fault-tolerant quantum systems later this decade.</li>
+        <li>Chinese startup CHIPX touts an optical quantum chip claiming up to 1,000x GPU speedups on niche AI workloads, pending wider validation.</li>
+        <li>Microsoft and Princeton partner on Discovery-style generative AI infrastructure for science, targeting advanced research workloads.</li>
+        <li>World Labs launches Marble, a generative world model that turns prompts into editable 3D environments for games, VR, and robotics.</li>
+        <li>A Tiny Recursive Model beats much larger LLMs on the ARC-AGI benchmark, suggesting architecture and training strategy can trump size.</li>
+        <li>Rockwell Automation and Nvidia roll out edge AI tools to bring small language models and real-time analytics onto factory floors.</li>
+        <li>Teradar emerges from stealth with $150M to commercialize terahertz sensors promising better performance than today's radar and lidar.</li>
+        <li>U.S. states—especially California—accelerate AI rulemaking, from frontier-model reporting duties to deepfake and chatbot safety laws.</li>
+        <li>xAI delays Grok 5 to early 2026 while scaling its Colossus data center toward hundreds of thousands of GPUs for the next model wave.</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Emails</a>
+    <a href="../index.html">CHAI</a>
+  </nav>
+</body>
+</html>

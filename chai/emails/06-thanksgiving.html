@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[CHAI] 06: Thanksgiving</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .signature {
+      margin-top: 1.5rem;
+      line-height: 1.4;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>[CHAI] 06: Thanksgiving</h1>
+    <div class="post-date">November 22, 2025</div>
+    <article class="post-box">
+      <p>Hi everyone,</p>
+      <p>I hope you are all doing well as we head into the holiday week. I intended to get this email out to you yesterday, so forgive the Saturday notification.</p>
+      <p>With finals approaching, I know things are getting busy. I am certainly looking forward to the break, and I hope you all get a chance to rest and recharge soon.</p>
+      <p>Here are few important updates for the club:</p>
+      <ul>
+        <li>No meeting next week.</li>
+        <li>Open-source contributions: I wanted to highlight how vital open-source contribution is for your growth in the field. It is one of the best ways to gain real-world experience and strengthen your resume. Please keep an eye on the following programs, as they are great resources (for your resume):
+          <ul>
+            <li>Linux Kernel Mentorship Program (NOT LIMITED TO LINUX)</li>
+            <li>Google Summer of Code</li>
+          </ul>
+        </li>
+        <li>Schedule Change for Next Semester: Looking ahead, we have decided to move our meetings to the Thursday club session starting next semester. This time slot seems to work better for the majority of the group, so please keep that in mind.</li>
+      </ul>
+      <p>Have a good break. Not much happened this week in tech in my opinion. I added some news from last week.</p>
+      <div class="signature">
+        Best regards,<br>
+        Seokwoo (Ryan) Chung<br>
+        The Cooper Union | Class of 2028<br>
+        Electrical Engineering Major
+      </div>
+
+      <h2>New Models & Research</h2>
+      <ul>
+        <li>OpenAI launched GPT-5.1 with "Instant" and "Thinking" modes and richer customization to standardize high-end conversational AI.</li>
+        <li>Moonshot AI released Kimi K2 Thinking, an open-weights model that rivals top proprietary models in agentic tasks while running efficiently on lower-cost hardware.</li>
+        <li>World Labs launched Marble, a generative world model that turns prompts into editable 3D environments for games, VR, and robotics.</li>
+        <li>A Tiny Recursive Model beat much larger LLMs on the ARC-AGI benchmark, suggesting architecture and training strategy can trump size.</li>
+        <li>Tsinghua University introduced "Self-Search Reinforcement Learning" (SSRL), allowing LLMs to simulate web searches within their own parameters to improve knowledge retrieval.</li>
+        <li>Microsoft and Princeton partnered on Discovery-style generative AI infrastructure specifically for advanced scientific research.</li>
+      </ul>
+
+      <h2>Infrastructure & The "Compute Race"</h2>
+      <ul>
+        <li>Anthropic committed $50B to U.S. AI data centers with Fluidstack, escalating the global race for frontier-model compute capacity.</li>
+        <li>Microsoft is knitting its Fairwater sites into an "AI superfactory," treating multiple data centers as a single massive training cluster.</li>
+        <li>xAI delayed Grok 5 to early 2026 to focus on scaling its Colossus data center to hundreds of thousands of GPUs.</li>
+        <li>Meta signed a $3B, five-year AI cloud deal with Nebius, underscoring the rise of specialized "GPU neocloud" providers.</li>
+        <li>CoreWeave plans up to $6B for a Pennsylvania AI data center, adding another large GPU hub to its footprint.</li>
+        <li>d-Matrix raised $275M to scale "inference-first" AI chips as serving costs begin to rival or exceed training costs.</li>
+      </ul>
+
+      <h2>Hardware & Quantum Computing</h2>
+      <ul>
+        <li>Baidu debuted domestic M100/M300 AI chips and Tianchi supernodes, pushing China toward homegrown alternatives to Nvidia and AMD.</li>
+        <li>IBM introduced the Loon quantum chip and Nighthawk roadmap, aiming at fault-tolerant quantum systems later this decade.</li>
+        <li>CHIPX (Chinese startup) touted an optical quantum chip claiming up to 1,000x GPU speedups on niche AI workloads (pending validation).</li>
+        <li>OnePlus launched the OnePlus 15 flagship smartphone in India, leading a week of new device launches.</li>
+      </ul>
+
+      <h2>Autonomous Systems & Robotics</h2>
+      <ul>
+        <li>Waymo became the first company to offer fully autonomous, driverless taxi service on freeways in SF, LA, and Phoenix.</li>
+        <li>Teradar emerged from stealth with $150M to commercialize terahertz sensors promising better performance than today's radar and lidar.</li>
+        <li>Rockwell Automation and Nvidia rolled out edge AI tools to bring small language models and real-time analytics onto factory floors.</li>
+      </ul>
+
+      <h2>Security, Policy & Events</h2>
+      <ul>
+        <li>Anthropic released a controversial report claiming a "Claude Code" agent executed a large-scale cyberattack, though independent researchers argue the threat was overstated.</li>
+        <li>U.S. States (especially California) are accelerating AI rulemaking, ranging from frontier-model reporting duties to deepfake safety laws.</li>
+        <li>AI Dev x NYC concluded with strong optimism from the developer community, highlighting the gap between "AI skepticism" in the media and the successful deployment of ROI-generating agents by technical teams.</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="index.html">Emails</a>
+    <a href="../index.html">CHAI</a>
+  </nav>
+</body>
+</html>
