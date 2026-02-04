@@ -150,10 +150,15 @@
     <div class="project-date">January 2026 &mdash; Present</div>
     <div class="tech-badges">
       <span>Python</span>
-      <span>Typer</span>
+      <span>PyTorch</span>
+      <span>FastAPI</span>
+      <span>Next.js</span>
+      <span>React</span>
       <span>SQLite</span>
+      <span>PostgreSQL</span>
+      <span>Docker</span>
+      <span>Typer</span>
       <span>Pydantic</span>
-      <span>Node.js</span>
     </div>
     <article class="project-box">
       <p>
@@ -164,6 +169,30 @@
         knowledge base through an interactive chat interface backed by
         language models. All data stays local by default; conversation
         history is never sent to external APIs.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        There is no shortage of ChatGPT wrappers. The barrier to shipping
+        an AI-powered product has dropped to the point where most of them
+        are thin skins over an API call&mdash;prompt in, completion out,
+        deploy to Vercel, done. The result is a flood of nearly identical
+        apps that outsource every hard problem to a single provider and
+        call it a day.
+      </p>
+      <p>
+        I wanted to go in the opposite direction: build a full-stack AI
+        application end to end, from training and fine-tuning models with
+        PyTorch and LoRA, to implementing the retrieval and embedding
+        pipeline, to standing up the backend (FastAPI, PostgreSQL with
+        pgvector), the frontend (Next.js), and the infrastructure
+        (Docker, Nginx) for actual cloud deployment. Not because wrapping
+        an API is wrong, but because I wanted to understand every layer
+        of the stack myself&mdash;how embeddings are generated and stored,
+        how hybrid search and reranking work under the hood, how a model
+        serving pipeline fits together, and what it actually takes to go
+        from a training script to a running service. compass is the
+        vehicle for that.
       </p>
 
       <h2>Local-First Design</h2>
