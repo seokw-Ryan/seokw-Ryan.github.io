@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>compass-cli - Ryan Chung</title>
+  <title>Soft Axiom - Ryan Chung</title>
   <style>
     :root {
       --bg-color: #FDFBF7;
@@ -146,7 +146,7 @@
 </head>
 <body>
   <main style="flex: 1;">
-    <h1>compass-cli</h1>
+    <h1><a href="https://softaxiom.com" style="color: inherit; text-decoration: none;">Soft Axiom</a></h1>
     <div class="project-date">January 2026 &mdash; Present</div>
     <div class="tech-badges">
       <span>Python</span>
@@ -154,21 +154,25 @@
       <span>FastAPI</span>
       <span>Next.js</span>
       <span>React</span>
-      <span>SQLite</span>
       <span>PostgreSQL</span>
+      <span>pgvector</span>
       <span>Docker</span>
-      <span>Typer</span>
       <span>Pydantic</span>
+      <span>Vercel</span>
+      <span>AWS App Runner</span>
+      <span>AWS RDS</span>
+      <span>AWS Cognito</span>
+      <span>OpenAI</span>
     </div>
     <article class="project-box">
       <p>
-        compass is a local-first command-line tool for personal knowledge
-        management with RAG (retrieval-augmented generation) capabilities.
-        It lets you initialize a vault&mdash;a regular directory on your
-        machine&mdash;ingest documents into it, and then query your own
-        knowledge base through an interactive chat interface backed by
-        language models. All data stays local by default; conversation
-        history is never sent to external APIs.
+        Soft Axiom is a full-stack AI knowledge management platform with
+        RAG (retrieval-augmented generation) capabilities. Ingest
+        documents, query them through a chat interface backed by language
+        models, and manage your personal knowledge base. The Next.js
+        frontend is deployed on Vercel and the FastAPI backend runs on
+        AWS App Runner. Live at
+        <a href="https://softaxiom.com" style="color: inherit;">softaxiom.com</a>.
       </p>
 
       <h2>Motivation</h2>
@@ -186,64 +190,65 @@
         PyTorch and LoRA, to implementing the retrieval and embedding
         pipeline, to standing up the backend (FastAPI, PostgreSQL with
         pgvector), the frontend (Next.js), and the infrastructure
-        (Docker, Nginx) for actual cloud deployment. Not because wrapping
-        an API is wrong, but because I wanted to understand every layer
-        of the stack myself&mdash;how embeddings are generated and stored,
-        how hybrid search and reranking work under the hood, how a model
-        serving pipeline fits together, and what it actually takes to go
-        from a training script to a running service. compass is the
-        vehicle for that.
-      </p>
-
-      <h2>Local-First Design</h2>
-      <p>
-        Vaults are ordinary directories with a <code>.compass/</code>
-        subdirectory that holds a SQLite database for document chunks and
-        embeddings, a profile config, and optional custom slash commands.
-        Application config follows the XDG Base Directory Specification
-        (TOML at <code>~/.config/compass/config.toml</code>), and chat
-        sessions are persisted as JSON files under
-        <code>~/.local/state/compass/sessions/</code>. There is no
-        telemetry, no cloud sync, and no account required. Vaults can be
-        backed up or moved like any other folder.
+        (Docker, AWS App Runner) for actual cloud deployment. Not because
+        wrapping an API is wrong, but because I wanted to understand every
+        layer of the stack myself&mdash;how embeddings are generated and
+        stored, how hybrid search and reranking work under the hood, how
+        a model serving pipeline fits together, and what it actually takes
+        to go from a training script to a running service. Soft Axiom is
+        the vehicle for that.
       </p>
 
       <h2>Document Ingestion and RAG</h2>
       <p>
-        The ingestion pipeline loads documents from multiple formats
-        (Markdown, plain text, logs), chunks them for retrieval, and
-        stores the chunks with embeddings in the vault's SQLite database.
-        At query time, compass retrieves relevant chunks, optionally
-        re-ranks them, and sends only the current query plus the retrieved
-        context to the configured LLM provider&mdash;keeping the full
-        conversation history local.
+        The ingestion pipeline loads documents from multiple formats,
+        chunks them for retrieval, and stores the chunks with embeddings
+        in PostgreSQL with pgvector. At query time, Soft Axiom retrieves
+        relevant chunks, optionally re-ranks them, and sends only the
+        current query plus the retrieved context to the configured LLM
+        provider.
       </p>
 
       <h2>LLM Providers</h2>
       <p>
-        compass supports multiple LLM providers: Ollama for fully local
-        inference, plus OpenAI, Anthropic, and Google for cloud-backed
-        queries. The default is local (Ollama), and when cloud providers
-        are used, only the current prompt and RAG context leave the
-        machine. Provider selection is handled through the TOML config
-        with dot-notation key access.
+        Soft Axiom supports multiple LLM providers: Ollama for fully
+        local inference, plus OpenAI, Anthropic, and Google for
+        cloud-backed queries.
       </p>
 
-      <h2>CLI and Distribution</h2>
+      <h2>Deployment Stack</h2>
       <p>
-        The CLI is built on Typer with Rich for terminal formatting.
-        Core commands include <code>init</code> (create a vault),
-        <code>config</code> (manage settings), <code>ingest</code>
-        (add documents), <code>chat</code> (interactive session with
-        resume), and <code>exec</code> (one-off prompts). The tool ships
-        as both a Python package and a Node.js wrapper for npm
-        distribution, with platform-aware binary detection for Linux,
-        macOS, and Windows.
+        The frontend is a Next.js 14 app deployed on Vercel. It
+        communicates with the backend through API route rewrites that
+        proxy requests to the backend origin, keeping the browser
+        pointed at a single domain. Authentication is handled by
+        AWS Cognito using the OIDC authorization-code flow via
+        oidc-client-ts and react-oidc-context on the client side.
       </p>
+      <p>
+        The backend is a FastAPI application running on AWS App Runner
+        with the Python 3.11 runtime. App Runner performs source-based
+        deployments from the main branch: the build phase installs
+        dependencies from a pinned requirements file, downloads the
+        AWS RDS SSL certificate bundle, and the run phase starts
+        Uvicorn on port 8000. JWT tokens from Cognito are verified
+        on every authenticated request using JWKS.
+      </p>
+      <p>
+        Data lives in a PostgreSQL instance on AWS RDS with the
+        pgvector extension enabled. Document chunks and their 1536-
+        dimensional embeddings (generated by OpenAI
+        text-embedding-3-small) are stored together, and retrieval
+        uses a hybrid of HNSW vector similarity search and
+        full-text search with tsvector indexes. Connections go
+        through asyncpg with a pool of 2&ndash;10 connections and
+        SSL enforced via the RDS CA bundle.
+      </p>
+      <p>
+        The project is closed source.</p>
 
       <h2>What's Next</h2>
       <ul>
-        <li>Full LLM provider implementations beyond the current interface stubs</li>
         <li>Complete RAG pipeline with embedding generation and re-ranking</li>
         <li>Broader document format support (PDF, HTML, EPUB)</li>
         <li>Decision journaling and weekly review workflows</li>
