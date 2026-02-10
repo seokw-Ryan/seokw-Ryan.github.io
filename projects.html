@@ -286,6 +286,24 @@
             </section>
 
             <section class="project-card">
+                <h2><a href="projects/soft-axiom-data.html">soft-axiom-data</a></h2>
+                <div class="project-details">
+                    <span class="project-date">February 2026 &mdash; Present</span>
+                    <span class="project-tech">Python, PyTorch, Hugging Face, LoRA, PEFT</span>
+                </div>
+                <p class="project-description">
+                    Data collection and curation pipeline for fine-tuning a
+                    domain-adapted language model that powers Soft Axiom,
+                    replacing generic API inference with a task-specific model.
+                </p>
+                <ul class="project-highlights">
+                    <li>Synthetic and real data sourcing from ingested documents, RAG interactions, and public datasets</li>
+                    <li>Deduplication, quality scoring, and provenance tracking for training-set integrity</li>
+                    <li>Parameter-efficient fine-tuning with LoRA via Hugging Face PEFT</li>
+                </ul>
+            </section>
+
+            <section class="project-card">
                 <h2><a href="projects/vla-world-model-control.html">vla-world-model-control</a></h2>
                 <div class="project-details">
                     <span class="project-date">February 2026 &mdash; Present</span>
@@ -300,6 +318,24 @@
                     <li>Simulation stack on NVIDIA RTX 5060 Ti 16 GB with Isaac Sim, Isaac Lab, and Isaac Lab Arena</li>
                     <li>Baseline VLA evaluations across standardized manipulation and navigation benchmarks</li>
                     <li>World-model augmentation study targeting improved multi-step task completion</li>
+                </ul>
+            </section>
+
+            <section class="project-card">
+                <h2><a href="projects/vla-video-data.html">vla-video-data</a></h2>
+                <div class="project-details">
+                    <span class="project-date">February 2026 &mdash; Present</span>
+                    <span class="project-tech">Python, PyTorch, FFmpeg, OpenCV, Hugging Face</span>
+                </div>
+                <p class="project-description">
+                    Video data collection and processing pipeline for training
+                    and fine-tuning vision-language-action models, feeding the
+                    vla-world-model-control project with curated datasets.
+                </p>
+                <ul class="project-highlights">
+                    <li>Multi-source ingestion from Isaac Sim recordings, public robotics datasets (DROID, Open X-Embodiment), and demonstrations</li>
+                    <li>Frame extraction, resolution normalization, and frame-action alignment pipeline</li>
+                    <li>Dataset curation with diversity balancing, duplicate removal, and quality filtering</li>
                 </ul>
             </section>
         </main>

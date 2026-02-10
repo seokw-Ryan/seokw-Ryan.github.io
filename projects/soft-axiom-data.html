@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>soft-axiom-data - Ryan Chung</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    .project-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .project-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .project-box h2 {
+      font-size: 1.3rem;
+      margin-top: 2rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-box h2:first-child {
+      margin-top: 0;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+      font-size: 1.05rem;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tech-badges span {
+      padding: 0.2rem 0.6rem;
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      font-size: 0.85rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>soft-axiom-data</h1>
+    <div class="project-date">February 2026 &mdash; Present</div>
+    <div class="tech-badges">
+      <span>Python</span>
+      <span>PyTorch</span>
+      <span>Hugging Face</span>
+      <span>LoRA</span>
+      <span>PEFT</span>
+      <span>Datasets</span>
+    </div>
+    <article class="project-box">
+      <p>
+        Data collection and curation pipeline for fine-tuning a language model
+        that powers Soft Axiom. The goal is to move beyond generic API-backed
+        inference and train a domain-adapted model that understands the specific
+        retrieval and knowledge-management tasks Soft Axiom handles, improving
+        answer quality and reducing dependence on third-party providers.
+      </p>
+
+      <h2>Motivation</h2>
+      <p>
+        Soft Axiom currently routes queries through external LLM providers.
+        That works for prototyping, but it limits control over output quality,
+        latency, cost, and privacy. Fine-tuning a model on task-specific data
+        lets the platform own its inference stack end to end&mdash;from the
+        data that shapes the model to the serving infrastructure that runs it.
+        The first step is building the dataset.
+      </p>
+
+      <h2>Data Collection</h2>
+      <p>
+        The pipeline gathers training examples from multiple sources: synthetic
+        question-answer pairs generated from ingested documents, real user
+        interactions with the RAG pipeline (anonymized and filtered), and
+        curated public datasets relevant to document comprehension and
+        knowledge retrieval. Each example is structured as an instruction-input-output
+        triple to match the fine-tuning format.
+      </p>
+
+      <h2>Data Quality and Processing</h2>
+      <p>
+        Raw data goes through deduplication, length filtering, and quality
+        scoring before entering the training set. Embedding-based similarity
+        checks remove near-duplicates, and heuristic filters flag low-quality
+        or off-topic examples for manual review. The pipeline tracks
+        provenance so every training example can be traced back to its source.
+      </p>
+
+      <h2>Fine-tuning Pipeline</h2>
+      <p>
+        The fine-tuning workflow uses Hugging Face Transformers with
+        PEFT/LoRA for parameter-efficient adaptation. This keeps GPU memory
+        requirements manageable and allows rapid iteration on different
+        base models and hyperparameter configurations without retraining
+        from scratch.
+      </p>
+
+      <h2>What's Next</h2>
+      <ul>
+        <li>Scale synthetic data generation from the existing Soft Axiom document corpus</li>
+        <li>Establish evaluation benchmarks for retrieval-grounded question answering</li>
+        <li>Run first LoRA fine-tuning experiments and compare against baseline providers</li>
+        <li>Integrate the fine-tuned model into the Soft Axiom serving pipeline</li>
+      </ul>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../projects.html">Projects</a>
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>
