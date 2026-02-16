@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dual-Calendar Interfaces for Retrospective and Prospective Time Awareness</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 { font-size: 1.4rem; margin-top: 2rem; border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: 0.3rem; }
+    h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p { margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+    pre {
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+
+    p code, li code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.15em 0.35em;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    th { background: rgba(0,0,0,0.05); font-weight: bold; }
+
+    ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; font-size: 1.05rem; }
+
+    strong { color: var(--text-color); }
+    em { color: rgba(0, 0, 0, 0.7); }
+
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.15); margin: 2rem 0; }
+
+    .nav-buttons {
+      display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; align-items: center; padding: 0.5rem;
+      width: 100%; margin-top: auto; margin-bottom: 1rem;
+    }
+    .nav-buttons a {
+      text-decoration: none; font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color); border: 1px solid #000; padding: 0.5rem 1rem;
+      white-space: nowrap; background-color: var(--bg-color); transition: all 0.2s ease;
+      width: 220px; text-align: center; box-sizing: border-box;
+    }
+    .nav-buttons a:hover { background-color: #000; color: var(--bg-color); }
+    @media (max-width: 600px) {
+      .nav-buttons { gap: 0.5rem; }
+      .nav-buttons a { width: 160px; font-size: clamp(0.7rem, 1.5vw, 0.9rem); }
+      h1 { font-size: 1.6rem; }
+      pre { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>Dual-Calendar Interfaces for Retrospective and Prospective Time Awareness</h1>
+    <div class="post-date">February 15, 2026</div>
+    <article class="post-box">
+
+      <p><strong>Ryan Seokwoo Chung</strong><br>February 2026</p>
+
+      <hr>
+
+      <h2>Abstract</h2>
+
+      <p>This paper presents the design evolution of Soft Axiom, a personal assistant application built around a dual-calendar paradigm that separates <em>intended</em> time (Signal) from <em>lived</em> time (Echo). Over 263 commits spanning 28 days of rapid development, the system evolved from a command-line chatbot into a cross-platform application (web + mobile) with voice input, AI-generated daily plans, and conversational calendar management. We document the iterative design process, focusing on the interaction patterns that emerged, the UI decisions that were made and reversed, and the broader HCI implications of representing temporal self-knowledge through two complementary calendar views. We argue that traditional single-calendar interfaces conflate planning with recording, and that bifurcating them changes how users relate to their own time.</p>
+
+      <hr>
+
+      <h2>1. Introduction</h2>
+
+      <p>Calendar applications are among the most ubiquitous personal information management (PIM) tools, yet their fundamental interaction model has changed little since the introduction of graphical desktop calendars in the 1990s. A calendar is a single surface onto which users place events, and those events represent both <em>what will happen</em> and <em>what did happen</em> with no structural distinction between the two.</p>
+
+      <p>This conflation creates a subtle cognitive problem. When a user looks at yesterday's calendar, they see what they <em>planned</em> to do, not necessarily what they <em>did</em>. The gap between intention and reality goes unrecorded. Research in time perception, daily recall, and reflective practice suggests that this gap is precisely the information most valuable for self-awareness and behavior change (Czerwinski et al., 2004; Li et al., 2010).</p>
+
+      <p>Soft Axiom addresses this by introducing two parallel calendars:</p>
+
+      <ul>
+        <li><strong>Signal</strong>: the forward-looking calendar of intentions, appointments, and plans.</li>
+        <li><strong>Echo</strong>: the backward-looking calendar of what actually happened, reconstructed through conversation with an AI assistant.</li>
+      </ul>
+
+      <p>The system's development was driven by a single developer iterating rapidly over four weeks, producing 263 commits. This paper treats that commit history as a design research artifact, tracing the evolution of interaction patterns, visual design decisions, and navigation paradigms.</p>
+
+      <hr>
+
+      <h2>2. Related Work</h2>
+
+      <h3>2.1 Personal Informatics and Self-Tracking</h3>
+
+      <p>Li et al. (2010) proposed a stage-based model of personal informatics: preparation, collection, integration, reflection, and action. Most calendar tools support only preparation (scheduling) and implicitly assume that the schedule <em>was</em> the day. Systems like RescueTime and Toggl provide automatic time tracking but lack intentional structure. Soft Axiom bridges these by pairing structured planning (Signal) with conversational reconstruction (Echo).</p>
+
+      <h3>2.2 Conversational Interfaces for PIM</h3>
+
+      <p>The use of natural language for calendar management has been explored in systems like Google Assistant and Microsoft Cortana. However, these systems treat conversation as a command interface for a single calendar. Soft Axiom's "Peter" agent uses conversation differently: it <em>interviews</em> the user about their day and constructs the Echo timeline from the dialogue, more closely resembling a structured journaling interaction.</p>
+
+      <h3>2.3 Temporal Visualization</h3>
+
+      <p>Research on timeline visualization (Plaisant et al., 1996; Brehmer et al., 2017) has explored how to represent temporal data at multiple granularities. Soft Axiom's month/week/day views are conventional, but the dual-mode toggle (Echo vs. Signal) on the same spatial surface is a novel interaction: the user sees the <em>same</em> time grid populated with different semantic content depending on which mode is active.</p>
+
+      <hr>
+
+      <h2>3. System Design and Evolution</h2>
+
+      <h3>3.1 Phase 1: CLI to Web (Days 1-7, Jan 17 - Feb 3)</h3>
+
+      <p>The project began as a Python CLI tool (<code>compass-cli</code>) with a simple chat loop backed by Ollama for local LLM inference. The earliest commits show a classic bootstrapping pattern: skeleton code, welcome flow, model selection, and API key management.</p>
+
+      <p>The pivot to a web frontend occurred on Feb 3 with a single large commit: <em>"Add web frontend with chat UI, evidence cards, toolbar panels, and dark mode."</em> This commit introduced the fundamental layout that would persist through all subsequent iterations: a chat-centric interface with collapsible side panels for calendar, todo, and other views.</p>
+
+      <p><strong>HCI Observation</strong>: The decision to make chat the primary surface (rather than the calendar) reflects a design hypothesis that <em>conversation is the natural entry point for personal time management</em>. Users don't open a calendar to plan; they tell someone what they need to do. The calendar is a <em>derived artifact</em>.</p>
+
+      <h3>3.2 Phase 2: Calendar as Core Surface (Days 8-12, Feb 8-11)</h3>
+
+      <p>A rapid sequence of commits reveals an oscillation in the design's center of gravity:</p>
+
+<pre><code>8376521  Swap calendar and chat button order, default to calendar on load
+aa9239d  Default to chat view on login instead of calendar</code></pre>
+
+      <p>The designer initially promoted the calendar to primary view, then reversed course. This pattern repeated:</p>
+
+<pre><code>d7a8238  Don't auto-switch to chat view after sending a message
+3bca003  Show chat input on all screens, auto-switch to chat on send</code></pre>
+
+      <p>The resolution was to make the chat input <em>persistent across all views</em> (visible on calendar, todo, and other panels) while allowing the user to remain in their current context. This is a significant interaction design choice: the AI assistant is not a <em>destination</em> but an <em>overlay</em>.</p>
+
+      <p><strong>Key commits in calendar evolution:</strong></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Commit</th>
+            <th>Design Decision</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feb 8</td>
+            <td><code>26a004f</code></td>
+            <td>Add date page with events and journal</td>
+          </tr>
+          <tr>
+            <td>Feb 11</td>
+            <td><code>7aa866a</code></td>
+            <td>Add day time grid (hourly rows)</td>
+          </tr>
+          <tr>
+            <td>Feb 11</td>
+            <td><code>43de544</code></td>
+            <td>Duration-based event heights</td>
+          </tr>
+          <tr>
+            <td>Feb 12</td>
+            <td><code>27aa8bb</code></td>
+            <td>Split into Signal and Echo calendars</td>
+          </tr>
+          <tr>
+            <td>Feb 12</td>
+            <td><code>ac9780e</code></td>
+            <td>Combine into single button with mode toggle</td>
+          </tr>
+          <tr>
+            <td>Feb 12</td>
+            <td><code>a3d95d2</code></td>
+            <td>Split back into separate buttons</td>
+          </tr>
+          <tr>
+            <td>Feb 13</td>
+            <td><code>bd8ee54</code></td>
+            <td>Swap button order</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>The Signal/Echo split underwent three architectural attempts in 48 hours. The final design settled on separate toolbar buttons with distinct visual treatments: Signal events render with the standard theme palette, while Echo events use a muted grey background to visually encode their "recorded past" status.</p>
+
+      <h3>3.3 Phase 3: The Echo Trace Interaction (Feb 12)</h3>
+
+      <p>The most distinctive interaction in Soft Axiom is the Echo trace: a conversational flow in which the AI assistant asks the user <em>"How was your day?"</em> and reconstructs a full 24-hour timeline from the user's responses.</p>
+
+      <p>Commit <code>26bfe62</code> (<em>"Add Echo trace: LLM asks about user's day and fills Echo calendar"</em>) introduced strict rules for this interaction:</p>
+
+      <ol>
+        <li>Echo events must cover the full 24 hours from midnight to midnight.</li>
+        <li>No gaps are permitted between events.</li>
+        <li>Every event must include a location (home, school, office, gym, car, etc.).</li>
+        <li>The LLM must infer reasonable defaults for unmentioned periods (sleep, meals, commute).</li>
+      </ol>
+
+      <p>This is a form of <strong>structured elicitation</strong>: the AI imposes a completeness constraint that the user would never satisfy voluntarily. Users naturally describe highlights ("I went to class, then the gym"), and the AI fills in the connective tissue ("7:00-7:30 Breakfast at Home, 7:30-8:00 Commute in Car, 8:00-10:00 Class at University...").</p>
+
+      <p><strong>HCI Observation</strong>: The gap-filling behavior transforms casual recall into comprehensive time-use data. This is analogous to the <em>diary reconstruction method</em> used in time-use surveys (Robinson &amp; Godbey, 1999), but administered conversationally by an AI rather than a human interviewer. The interaction is lightweight enough for daily use while producing data rich enough for longitudinal self-reflection.</p>
+
+      <h3>3.4 Phase 4: Visual Design Iteration (Feb 8-14)</h3>
+
+      <p>The commit history reveals an extraordinary density of visual design changes, many of which were made and reverted within hours:</p>
+
+<pre><code>6f8e58e  Add inverted color scheme for Signal calendar
+7e8dfd0  Revert "Add inverted color scheme for Signal calendar"
+
+2e3d33e  Add privacy blur toggle for Thoughts panel and Echo calendar
+8b0388a  Revert "Add privacy blur toggle for Thoughts panel and Echo calendar"
+
+0811282  Reverse dim effect for Echo calendar: dim future events, not past</code></pre>
+
+      <p><strong>Calendar event styling alone</strong> underwent at least seven distinct visual treatments:</p>
+
+      <ol>
+        <li>Solid colored backgrounds (<code>c272b4a</code>)</li>
+        <li>Outlined containers (<code>627c975</code>)</li>
+        <li>Inverted color containers (<code>6edd571</code>)</li>
+        <li>Opaque backgrounds to hide grid lines (<code>45161a7</code>)</li>
+        <li>Google Calendar-style blocks (<code>6f8e58e</code>, reverted)</li>
+        <li>Black border with grey background (<code>5a29d2a</code>)</li>
+        <li>Grey background in both themes (<code>b2bea8c</code>)</li>
+      </ol>
+
+      <p><strong>HCI Observation</strong>: This pattern is characteristic of single-designer rapid prototyping where the designer is also the user. Each visual treatment was <em>experienced</em> rather than <em>spec'd</em>, and rejected within hours based on felt quality. The revert-heavy workflow suggests that calendar event appearance is a surprisingly high-sensitivity design variable: small changes in color, border, and opacity dramatically affect the readability of a time grid.</p>
+
+      <h3>3.5 Phase 5: Mobile and Cross-Platform (Feb 10-14)</h3>
+
+      <p>The Expo mobile app was scaffolded on Feb 10 (<code>589131b</code>) and rapidly brought to feature parity with the web frontend. The mobile design introduced a swipe-based PagerView with five pages:</p>
+
+<pre><code>Journal | Echo | Chat/Home | Signal | Plan</code></pre>
+
+      <p>This spatial arrangement encodes the dual-calendar concept physically: Echo is to the <em>left</em> of center (the past), Signal is to the <em>right</em> (the future), and the chat/home screen sits at the center of the temporal axis.</p>
+
+      <p>Later commits disabled swiping for certain panels (<code>d07fd42</code>: <em>"Disable PagerView swiping in chat/todo/memo"</em>), suggesting that gestural navigation conflicted with text input and scrollable content within panels.</p>
+
+      <p><strong>HCI Observation</strong>: The spatial metaphor of past-left, future-right aligns with Western reading direction and has been shown to correspond to mental timeline representations (Boroditsky, 2000). However, the practical tension between swipe navigation and in-panel interaction is a persistent challenge in single-screen mobile design.</p>
+
+      <hr>
+
+      <h2>4. Interaction Patterns</h2>
+
+      <h3>4.1 Persistent Chat Input</h3>
+
+      <p>The final design places a text input field at the bottom of every screen. Sending a message does <em>not</em> navigate the user to a chat view; the response streams in context. This pattern treats the AI as an ambient utility rather than a separate application mode.</p>
+
+      <h3>4.2 Pull-to-Refresh</h3>
+
+      <p>Commit <code>5ed975e</code> added pull-to-refresh to all mobile panels. This gesture, borrowed from social media feeds, is recontextualized here as a way to sync personal data (new events, updated plans, completed todos) rather than fetching external content.</p>
+
+      <h3>4.3 24-Hour Time Input</h3>
+
+      <p>The final commit in the history (<code>e0902bd</code>: <em>"Replace AM/PM time pickers with 24-hour text input for events"</em>) replaced dropdown time selectors with plain text fields accepting 24-hour format. This is a deliberate de-widgeting: removing structured input in favor of faster, keyboard-driven entry, at the cost of validation. It reflects a preference for speed over error prevention in a single-user system.</p>
+
+      <h3>4.4 Checkable Plans</h3>
+
+      <p>Plans are displayed as arrow-separated chains (<code>Running -&gt; Shower -&gt; Class -&gt; Study</code>) with each step rendered as a checkable item. Checking a step applies a strikethrough, visually crossing off the day's agenda. This interaction bridges the Signal/Echo gap: a checked plan item implicitly confirms that the intended activity occurred.</p>
+
+      <hr>
+
+      <h2>5. Design Tensions and Trade-offs</h2>
+
+      <h3>5.1 Automation vs. Agency</h3>
+
+      <p>The system auto-generates plans from routines + events + todos, but this raised the question of <em>when</em> to generate. Early commits auto-generated on home page load (<code>6759ebd</code>), which was later removed (<code>3ec68ee</code>: <em>"Remove Today's Plan section from web home page"</em>). The final design requires explicit user action to generate a plan, preserving user agency over their daily agenda.</p>
+
+      <h3>5.2 Privacy and Legibility</h3>
+
+      <p>A privacy blur toggle was added and immediately reverted (<code>2e3d33e</code> / <code>8b0388a</code>). The feature allowed users to blur the Thoughts panel and Echo calendar, presumably for use in public settings. Its reversion suggests either implementation issues or a design judgment that privacy should be handled at the OS level (screen lock) rather than within the app.</p>
+
+      <h3>5.3 Chat vs. Direct Manipulation</h3>
+
+      <p>The system supports both conversational and direct-manipulation interaction for the same operations. Users can say "add a meeting tomorrow at 3pm" <em>or</em> click the create button and fill in form fields. The commit history shows continuous refinement of both paths, suggesting that neither alone is sufficient. The conversational path is faster for simple operations; direct manipulation is preferred for precise editing (e.g., adjusting event times by minutes).</p>
+
+      <hr>
+
+      <h2>6. Naming as Design</h2>
+
+      <p>The commit history reveals significant attention to naming:</p>
+
+<pre><code>0ff2317  Rename Trace/Journal -&gt; Thoughts across full stack with edit/save UX
+5cc54bf  Combine home carousel, rename Thoughts to Journal, and add Memo feature</code></pre>
+
+      <p>The journaling feature was renamed three times: Trace -&gt; Journal -&gt; Thoughts -&gt; Journal. Each name carries different connotations:</p>
+
+      <ul>
+        <li><strong>Trace</strong>: forensic, systematic, complete (aligned with Echo's gap-free philosophy)</li>
+        <li><strong>Journal</strong>: personal, reflective, literary</li>
+        <li><strong>Thoughts</strong>: lightweight, fragmentary, low-commitment</li>
+      </ul>
+
+      <p>The final name, Journal, balances formality with accessibility. The site tagline was also carefully chosen: <em>"For myself, To Be Remembered"</em> (<code>4a6c98c</code>) -- framing the system as a tool for memory rather than productivity.</p>
+
+      <hr>
+
+      <h2>7. Discussion</h2>
+
+      <h3>7.1 The Dual-Calendar Hypothesis</h3>
+
+      <p>The core HCI contribution of Soft Axiom is the hypothesis that <em>separating intended time from lived time changes the user's relationship with their calendar</em>. A single calendar collapses planning and recording into one artifact, making it impossible to see where intentions diverged from reality. The dual-calendar makes this divergence visible and, through the Echo trace, turns daily recall into structured data.</p>
+
+      <p>This is not merely a feature; it is a different <em>ontology of personal time</em>. Signal represents the world as the user wishes it to be; Echo represents the world as it was. The gap between them is the space where self-knowledge lives.</p>
+
+      <h3>7.2 Rapid Iteration as Design Method</h3>
+
+      <p>The 263 commits in 28 days (averaging 9.4 commits/day) represent an extremely compressed design cycle. The frequent reverts and re-implementations suggest a <em>build-to-think</em> methodology where the designer uses working software as a sketching medium. This is consistent with Buxton's (2007) distinction between sketching and prototyping: these commits are sketches in code.</p>
+
+      <h3>7.3 LLM as Interaction Medium</h3>
+
+      <p>The use of an LLM as the primary interaction medium for calendar management has implications beyond convenience. The LLM imposes its own structure on user input: it infers times, locations, and durations; it asks clarifying questions; it refuses to leave gaps in the Echo timeline. The AI is not a passive tool but an <em>active interlocutor</em> that shapes the data it collects. This raises questions about whose model of the day is being recorded -- the user's or the AI's.</p>
+
+      <hr>
+
+      <h2>8. Limitations</h2>
+
+      <p>This paper describes a single-developer, single-user system. The design decisions documented here reflect one person's preferences and cognitive style. The dual-calendar concept has not been evaluated with external users, and it is unclear whether the Echo trace's 24-hour completeness requirement would feel helpful or burdensome to others.</p>
+
+      <p>The commit history is a rich but incomplete design record. It captures <em>what</em> changed but not always <em>why</em>. Internal reasoning is occasionally visible in commit messages but often must be inferred from patterns.</p>
+
+      <hr>
+
+      <h2>9. Conclusion</h2>
+
+      <p>Soft Axiom demonstrates that rethinking the fundamental ontology of a familiar tool -- the calendar -- can open new interaction possibilities. The Signal/Echo split, the conversational Echo trace, the persistent chat overlay, and the spatial past-left/future-right mobile layout all represent design choices grounded in a coherent vision of personal time management as a reflective practice rather than a scheduling utility.</p>
+
+      <p>The system's rapid development history also serves as a case study in single-designer iterative design, showing how working software can function as a thinking tool when the feedback loop between design and experience is measured in minutes rather than weeks.</p>
+
+      <hr>
+
+      <h2>References</h2>
+
+      <ul>
+        <li>Boroditsky, L. (2000). Metaphoric structuring: Understanding time through spatial metaphors. <em>Cognition</em>, 75(1), 1-28.</li>
+        <li>Brehmer, M., Lee, B., Bach, B., Riche, N. H., &amp; Munzner, T. (2017). Timelines revisited: A design space and considerations for expressive storytelling. <em>IEEE TVCG</em>, 23(9), 2151-2164.</li>
+        <li>Buxton, B. (2007). <em>Sketching User Experiences: Getting the Design Right and the Right Design</em>. Morgan Kaufmann.</li>
+        <li>Czerwinski, M., Horvitz, E., &amp; Wilhite, S. (2004). A diary study of task switching and interruptions. <em>Proc. CHI 2004</em>, 175-182.</li>
+        <li>Li, I., Dey, A., &amp; Forlizzi, J. (2010). A stage-based model of personal informatics systems. <em>Proc. CHI 2010</em>, 557-566.</li>
+        <li>Plaisant, C., Milash, B., Rose, A., Widoff, S., &amp; Shneiderman, B. (1996). LifeLines: Visualizing personal histories. <em>Proc. CHI 1996</em>, 221-227.</li>
+        <li>Robinson, J. P., &amp; Godbey, G. (1999). <em>Time for Life: The Surprising Ways Americans Use Their Time</em>. Penn State University Press.</li>
+      </ul>
+
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>

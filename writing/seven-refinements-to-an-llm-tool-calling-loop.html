@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seven Refinements to an LLM Tool-Calling Loop</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 { font-size: 1.4rem; margin-top: 2rem; border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: 0.3rem; }
+    h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p { margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+    pre {
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+
+    p code, li code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.15em 0.35em;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    th { background: rgba(0,0,0,0.05); font-weight: bold; }
+
+    ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; font-size: 1.05rem; }
+
+    strong { color: var(--text-color); }
+    em { color: rgba(0, 0, 0, 0.7); }
+
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.15); margin: 2rem 0; }
+
+    .nav-buttons {
+      display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; align-items: center; padding: 0.5rem;
+      width: 100%; margin-top: auto; margin-bottom: 1rem;
+    }
+    .nav-buttons a {
+      text-decoration: none; font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color); border: 1px solid #000; padding: 0.5rem 1rem;
+      white-space: nowrap; background-color: var(--bg-color); transition: all 0.2s ease;
+      width: 220px; text-align: center; box-sizing: border-box;
+    }
+    .nav-buttons a:hover { background-color: #000; color: var(--bg-color); }
+    @media (max-width: 600px) {
+      .nav-buttons { gap: 0.5rem; }
+      .nav-buttons a { width: 160px; font-size: clamp(0.7rem, 1.5vw, 0.9rem); }
+      h1 { font-size: 1.6rem; }
+      pre { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>Seven Refinements to an LLM Tool-Calling Loop</h1>
+    <div class="post-date">February 15, 2026</div>
+    <article class="post-box">
+
+      <p><strong>Ryan Seokwoo Chung</strong><br>February 2026</p>
+
+      <hr>
+
+      <h2>Abstract</h2>
+
+      <p>We describe seven targeted changes to the tool-calling architecture of Soft Axiom, a production personal assistant powered by a tool-calling LLM agent. The original system forced tool use on every turn via <code>tool_choice="required"</code> with a <code>respond</code> shim, executed tools sequentially, dropped tool context between turns, injected heavy context on every request, and split two near-identical calendar tools. We document the rationale for each change, the trade-offs considered, and the expected impact on latency, token cost, and tool-calling accuracy.</p>
+
+      <hr>
+
+      <h2>1. Introduction</h2>
+
+      <p>Soft Axiom's chat loop went through rapid iteration during its first 28 days of development (263 commits). The initial architecture optimized for <em>correctness</em> -- ensuring the LLM always took action -- at the cost of efficiency and flexibility. As the system stabilized, several structural inefficiencies became apparent:</p>
+
+      <ol>
+        <li>The <code>respond</code> tool added overhead to every conversational turn.</li>
+        <li>Sequential tool execution created unnecessary latency when multiple tools were called.</li>
+        <li>Dropping tool context between turns forced the LLM to re-derive information.</li>
+        <li>Heavy context injection wasted tokens on data the LLM rarely needed.</li>
+        <li>Two near-identical calendar tools confused tool selection.</li>
+      </ol>
+
+      <p>This paper documents the seven changes made to address these issues, organized by their dependency order.</p>
+
+      <hr>
+
+      <h2>2. Change #1: Drop <code>respond</code> Tool, Switch to <code>tool_choice="auto"</code></h2>
+
+      <h3>Before</h3>
+
+      <p>Every LLM turn required a tool call (<code>tool_choice="required"</code>). To handle conversational replies, a <code>respond</code> tool existed solely to emit text:</p>
+
+<pre><code>{"name": "respond", "parameters": {"text": "Sure, I added that event."}}</code></pre>
+
+      <p>The system prompt instructed: <em>"You MUST always call exactly one tool. If no action is needed, use respond."</em></p>
+
+      <h3>Rationale</h3>
+
+      <p>The <code>respond</code> shim served its purpose during early development when models frequently <em>described</em> actions instead of performing them. However, it introduced three costs:</p>
+
+      <ol>
+        <li><strong>Extra round-trip</strong>: Every simple reply required tool-call parsing, even though the <code>respond</code> handler was a no-op.</li>
+        <li><strong>Token overhead</strong>: The <code>respond</code> tool definition consumed ~50 tokens in every request.</li>
+        <li><strong>Confusion on multi-step tasks</strong>: The LLM sometimes called <code>respond</code> mid-sequence instead of continuing with the next tool.</li>
+      </ol>
+
+      <h3>After</h3>
+
+      <ul>
+        <li><code>tool_choice="auto"</code> -- the LLM can reply with plain text or call tools.</li>
+        <li>The <code>respond</code> tool definition is deleted entirely.</li>
+        <li>System prompt updated: <em>"Use tools when you need to take action. If no tool is needed, just reply directly."</em></li>
+      </ul>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Eliminates respond overhead on every turn</td>
+            <td>Small risk of LLM describing actions instead of performing them</td>
+          </tr>
+          <tr>
+            <td>Reduces tool count from 8 to 7 (then 6 after #6)</td>
+            <td>Requires monitoring for regression</td>
+          </tr>
+          <tr>
+            <td>Simpler mental model for the LLM</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Risk mitigation</strong>: Modern models (GPT-OSS-20B, DeepSeek V3) are significantly better at tool calling than when the <code>respond</code> shim was introduced. The failure mode it prevented is now rare.</p>
+
+      <hr>
+
+      <h2>3. Change #6: Merge <code>signal_calendar</code> + <code>echo_calendar</code> into Single <code>calendar</code> Tool</h2>
+
+      <h3>Before</h3>
+
+      <p>Two separate tools with nearly identical schemas:</p>
+
+<pre><code>signal_calendar: create_event, update_event, delete_event, save_plan, update_plan, delete_plan
+echo_calendar:   create_event, update_event, delete_event, save_journal, update_journal, delete_journal</code></pre>
+
+      <p>The only differences: echo events require location, and echo has journal actions instead of plan actions.</p>
+
+      <h3>Rationale</h3>
+
+      <ol>
+        <li><strong>Tool selection confusion</strong>: The LLM occasionally selected the wrong calendar tool, creating echo events on signal or vice versa.</li>
+        <li><strong>Schema duplication</strong>: ~140 lines of identical parameter definitions.</li>
+        <li><strong>Cognitive load</strong>: Two tools with the same verbs (<code>create_event</code>) but different semantics is inherently ambiguous.</li>
+      </ol>
+
+      <h3>After</h3>
+
+      <p>Single <code>calendar</code> tool with a required <code>calendar_type</code> parameter:</p>
+
+<pre><code>{
+  "name": "calendar",
+  "parameters": {
+    "action": "create_event",
+    "calendar_type": "signal",
+    "title": "Team meeting",
+    "start_time": "2026-02-15T14:00:00"
+  }
+}</code></pre>
+
+      <p>Combined action enum: <code>create_event, batch_create_events, update_event, delete_event, save_plan, update_plan, delete_plan, save_journal, update_journal, delete_journal</code>.</p>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Reduces tool count by 1 (7 -> 6)</td>
+            <td>Slightly larger single schema</td>
+          </tr>
+          <tr>
+            <td>Eliminates wrong-calendar selection errors</td>
+            <td>LLM must remember to set calendar_type</td>
+          </tr>
+          <tr>
+            <td>Single place for all calendar documentation</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Risk mitigation</strong>: <code>calendar_type</code> is marked as <code>required</code>, so omission causes a validation error rather than silent misrouting.</p>
+
+      <hr>
+
+      <h2>4. Change #7: Move Echo Reconstruction Instructions to Tool Description</h2>
+
+      <h3>Before</h3>
+
+      <p>The system prompt contained a ~20-line block of detailed Echo reconstruction instructions:</p>
+
+<pre><code>When the user describes their day:
+1. Reference today's Signal events...
+2. Reconstruct the FULL 24 HOURS...
+3. EVERY echo event MUST have ALL of: title, start_time, end_time, AND location...
+4. Fill ALL gaps: include sleep, commutes...
+5. Save a journal entry...</code></pre>
+
+      <p>This was injected on <em>every</em> request, regardless of whether the user was doing an Echo trace.</p>
+
+      <h3>Rationale</h3>
+
+      <ol>
+        <li><strong>Token waste</strong>: These instructions are only relevant during Echo reconstruction, which happens at most once per day.</li>
+        <li><strong>Prompt crowding</strong>: Long system prompts dilute attention on the instructions that matter for the current turn.</li>
+        <li><strong>Better placement</strong>: Tool descriptions are naturally scoped -- the LLM reads them when it's about to call that tool.</li>
+      </ol>
+
+      <h3>After</h3>
+
+      <ul>
+        <li>System prompt reduced to a 3-line trigger: <em>"If today's journal is MISSING, ask the user 'How was your day?' on casual messages."</em></li>
+        <li>Condensed reconstruction notes appended to the <code>calendar</code> tool description, where they're contextually relevant.</li>
+      </ul>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Saves ~200 tokens per non-Echo request</td>
+            <td>Instructions may get less attention in tool description</td>
+          </tr>
+          <tr>
+            <td>Cleaner, more focused system prompt</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <h2>5. Change #2: Batch Event Creation</h2>
+
+      <h3>Before</h3>
+
+      <p>Creating multiple events (e.g., an Echo trace with 10-15 events) required sequential <code>create_event</code> calls, each a separate tool-call round.</p>
+
+      <h3>Rationale</h3>
+
+      <p>Echo reconstruction is the system's most tool-intensive operation. A typical trace generates 10-15 events. With sequential single-event creation, this requires 10-15 tool calls across multiple LLM rounds, each incurring token cost and latency.</p>
+
+      <h3>After</h3>
+
+      <p>New <code>batch_create_events</code> action accepts an <code>events</code> array:</p>
+
+<pre><code>{
+  "name": "calendar",
+  "parameters": {
+    "action": "batch_create_events",
+    "calendar_type": "echo",
+    "events": [
+      {"title": "Sleep", "start_time": "...", "end_time": "...", "location": "Home"},
+      {"title": "Morning routine", "start_time": "...", "end_time": "...", "location": "Home"},
+      ...
+    ]
+  }
+}</code></pre>
+
+      <p>The backend uses <code>asyncio.gather</code> to create all events in parallel.</p>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Echo trace goes from 10-15 tool calls to 1-2</td>
+            <td>Larger single tool call payload</td>
+          </tr>
+          <tr>
+            <td>Parallel DB writes reduce latency</td>
+            <td>Partial failure semantics (some events created, others fail)</td>
+          </tr>
+          <tr>
+            <td>Fewer LLM rounds = lower token cost</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <h2>6. Change #5: Lean Context Injection</h2>
+
+      <h3>Before</h3>
+
+      <p>Every request injected into the system prompt:</p>
+
+      <ul>
+        <li>Today's upcoming Signal events (up to 10)</li>
+        <li>Today's Signal events specifically</li>
+        <li>Today's Echo events</li>
+        <li>Open todos (up to 10)</li>
+        <li>Active routines with steps</li>
+        <li>Today's plan</li>
+        <li>Today's journal status</li>
+      </ul>
+
+      <p>This consumed 500-1500 tokens per request.</p>
+
+      <h3>Rationale</h3>
+
+      <p>Context injection was introduced to reduce tool calls (Section 3.4 of the Applied AI paper). However, analysis showed that most of this context was unused on most turns:</p>
+
+      <ul>
+        <li>Upcoming events: only needed when the user asks about their schedule</li>
+        <li>Todos: only needed when the user asks about tasks</li>
+        <li>Routines: only needed during plan generation</li>
+        <li>Signal/Echo events: only needed for specific calendar queries</li>
+      </ul>
+
+      <p>The LLM has a <code>search</code> tool that can retrieve all of this on demand.</p>
+
+      <h3>After</h3>
+
+      <p>Only inject:</p>
+
+      <ul>
+        <li>Current date/time/timezone/location (always needed, ~100 tokens)</li>
+        <li>Today's plan (frequently referenced, ~50-200 tokens)</li>
+        <li>Today's journal status (needed for Echo trigger, ~20 tokens)</li>
+      </ul>
+
+      <p>System prompt updated: <em>"Use search when you need events, todos, routines, or other data beyond what's shown."</em></p>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Saves 300-1200 tokens per request</td>
+            <td>Adds 1 tool-call round when user asks about events/todos</td>
+          </tr>
+          <tr>
+            <td>Reduces 5 DB queries to 2 per request</td>
+            <td>Slightly slower for "what's on my calendar today?"</td>
+          </tr>
+          <tr>
+            <td>Cleaner system prompt</td>
+            <td>LLM must learn to search proactively</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p><strong>Break-even analysis</strong>: At ~$0.001 per 1K tokens, saving 800 tokens/request saves ~$0.0008/request. If 30% of requests now need an extra search call (~500 tokens round-trip), the net saving is ~$0.0005/request. Modest but consistent.</p>
+
+      <hr>
+
+      <h2>7. Change #4: Persist Full Tool Context in Session</h2>
+
+      <h3>Before</h3>
+
+      <p>Session persistence saved only user message + final assistant text:</p>
+
+<pre><code>session.add_message("user", body.message)
+session.add_message("assistant", full_response)</code></pre>
+
+      <p>All intermediate tool calls and results were lost. On subsequent turns, the LLM had no memory of <em>what it did</em> -- only what it <em>said</em>.</p>
+
+      <h3>Rationale</h3>
+
+      <p>This caused two problems:</p>
+
+      <ol>
+        <li><strong>Context loss</strong>: If the LLM created 5 Echo events on turn 1, it had no record of those event IDs on turn 2. Editing or deleting them required a fresh search.</li>
+        <li><strong>Conversation incoherence</strong>: The LLM couldn't reference its own prior actions, making multi-turn workflows brittle.</li>
+      </ol>
+
+      <h3>After</h3>
+
+      <p>Full tool context persisted via session message metadata:</p>
+
+<pre><code># Assistant message with tool calls
+session.add_message("assistant", text, metadata={"tool_calls": [...]})
+
+# Tool result
+session.add_message("tool", result, metadata={"tool_call_id": "...", "tool_name": "..."})</code></pre>
+
+      <p>The <code>_build_messages_with_context</code> function reconstructs the full conversation including tool calls from metadata on subsequent turns.</p>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>LLM retains full action history</td>
+            <td>Larger session payloads (more stored messages)</td>
+          </tr>
+          <tr>
+            <td>Enables multi-turn workflows (create then edit)</td>
+            <td>More tokens consumed reconstructing history</td>
+          </tr>
+          <tr>
+            <td>Backwards-compatible (old sessions still work)</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <h2>8. Change #3: Parallel Tool Execution</h2>
+
+      <h3>Before</h3>
+
+      <p>Tool calls executed sequentially in a <code>for</code> loop:</p>
+
+<pre><code>for tc in pending_tool_calls:
+    status(tc, "running")
+    result = await executor.execute(tc)
+    log(result)
+    emit_mutation(result)</code></pre>
+
+      <h3>Rationale</h3>
+
+      <p>When the LLM emits multiple tool calls in a single response (e.g., create event + save journal), they executed one after another. Since most tool calls hit independent database tables, there's no reason they can't run concurrently.</p>
+
+      <h3>After</h3>
+
+<pre><code># 1. Emit all statuses upfront
+for tc in pending_tool_calls:
+    yield status(tc, "running")
+
+# 2. Execute in parallel
+results = await asyncio.gather(*[exec(tc) for tc in pending_tool_calls])
+
+# 3. Process results sequentially (logging, mutations, session persistence)
+for tc, result, latency in results:
+    log(result)
+    emit_mutation(result)
+    append_to_session(result)</code></pre>
+
+      <h3>Trade-offs</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Pro</th>
+            <th>Con</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>N tool calls take max(latency) instead of sum(latency)</td>
+            <td>Shared DB connection pool pressure</td>
+          </tr>
+          <tr>
+            <td>User sees all status indicators immediately</td>
+            <td>Error handling is slightly more complex</td>
+          </tr>
+          <tr>
+            <td>Particularly impactful for batch operations</td>
+            <td>Ordering of mutation events changes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <hr>
+
+      <h2>9. Combined Impact</h2>
+
+      <h3>Token Budget</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>Before (tokens/request)</th>
+            <th>After (tokens/request)</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>System prompt</td>
+            <td>~1200</td>
+            <td>~900</td>
+            <td>-300</td>
+          </tr>
+          <tr>
+            <td>Context injection</td>
+            <td>500-1500</td>
+            <td>100-300</td>
+            <td>-700 avg</td>
+          </tr>
+          <tr>
+            <td><code>respond</code> tool def</td>
+            <td>~50</td>
+            <td>0</td>
+            <td>-50</td>
+          </tr>
+          <tr>
+            <td><code>signal_calendar</code> def</td>
+            <td>~200</td>
+            <td>0</td>
+            <td>-200</td>
+          </tr>
+          <tr>
+            <td><code>echo_calendar</code> def</td>
+            <td>~220</td>
+            <td>0</td>
+            <td>-220</td>
+          </tr>
+          <tr>
+            <td><code>calendar</code> (merged) def</td>
+            <td>0</td>
+            <td>~280</td>
+            <td>+280</td>
+          </tr>
+          <tr>
+            <td><strong>Net per request</strong></td>
+            <td></td>
+            <td></td>
+            <td><strong>~-1200</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Tool Count</h3>
+
+      <p>8 tools -> 6 tools. Fewer tools means better selection accuracy on smaller models.</p>
+
+      <h3>Latency (Estimated)</h3>
+
+      <ul>
+        <li>Simple conversational turn: -1 LLM round (no respond call needed)</li>
+        <li>Echo trace: -8-12 tool calls (batch creation), parallel execution</li>
+        <li>Multi-tool response: from sum(latencies) to max(latencies)</li>
+      </ul>
+
+      <hr>
+
+      <h2>10. Conclusion</h2>
+
+      <p>These seven changes represent a shift from a <em>defensive</em> architecture (force every action through tools, inject all possible context) to a <em>lean</em> architecture (trust the model, inject only what's needed, let it search for the rest). This shift was only possible because tool-calling accuracy in modern models has improved substantially since the system was first built.</p>
+
+      <p>The changes are ordered by dependency (#1 before #6 before #7, #6 before #2) and designed to be backwards-compatible with existing sessions. The merged calendar tool and batch creation are the highest-impact changes for daily use; lean context injection provides the most consistent token savings.</p>
+
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>

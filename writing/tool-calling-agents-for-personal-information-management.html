@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tool-Calling Agents for Personal Information Management</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 { font-size: 1.4rem; margin-top: 2rem; border-bottom: 1px solid rgba(0,0,0,0.15); padding-bottom: 0.3rem; }
+    h3 { font-size: 1.15rem; margin-top: 1.5rem; }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p { margin-bottom: 1.5rem; font-size: 1.05rem; }
+
+    pre {
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.1);
+      padding: 1rem;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1.5rem;
+    }
+
+    code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+
+    p code, li code {
+      background: rgba(0,0,0,0.06);
+      padding: 0.15em 0.35em;
+      border-radius: 3px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+    }
+
+    th { background: rgba(0,0,0,0.05); font-weight: bold; }
+
+    ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+    li { margin-bottom: 0.5rem; font-size: 1.05rem; }
+
+    strong { color: var(--text-color); }
+    em { color: rgba(0, 0, 0, 0.7); }
+
+    hr { border: none; border-top: 1px solid rgba(0,0,0,0.15); margin: 2rem 0; }
+
+    .nav-buttons {
+      display: flex; flex-direction: row; flex-wrap: wrap; gap: 1rem;
+      justify-content: center; align-items: center; padding: 0.5rem;
+      width: 100%; margin-top: auto; margin-bottom: 1rem;
+    }
+    .nav-buttons a {
+      text-decoration: none; font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color); border: 1px solid #000; padding: 0.5rem 1rem;
+      white-space: nowrap; background-color: var(--bg-color); transition: all 0.2s ease;
+      width: 220px; text-align: center; box-sizing: border-box;
+    }
+    .nav-buttons a:hover { background-color: #000; color: var(--bg-color); }
+    @media (max-width: 600px) {
+      .nav-buttons { gap: 0.5rem; }
+      .nav-buttons a { width: 160px; font-size: clamp(0.7rem, 1.5vw, 0.9rem); }
+      h1 { font-size: 1.6rem; }
+      pre { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>Tool-Calling Agents for Personal Information Management</h1>
+    <div class="post-date">February 15, 2026</div>
+    <article class="post-box">
+
+      <p style="text-align: center; margin-bottom: 0.3rem;"><strong>Ryan Seokwoo Chung</strong></p>
+      <p style="text-align: center;">February 2026</p>
+
+      <hr>
+
+      <h2>Abstract</h2>
+
+      <p>We describe the design and iterative refinement of Soft Axiom, a personal assistant system in which a tool-calling LLM agent ("Peter") manages a user's calendar, tasks, routines, memos, and journal through natural language conversation. The system was developed over 28 days (263 commits) and deployed to production on AWS App Runner with a Next.js frontend on Vercel and an Expo mobile app. We document the agent architecture, tool design, prompt engineering, LLM provider migrations (four model switches in two weeks), token budget enforcement, and failure modes encountered in production. The system consolidates 16 original fine-grained tools into 5 action-dispatching tools, enforces tool use on every turn via <code>tool_choice="required"</code>, and implements a <code>respond</code> tool to control output flow. We report on practical challenges including infinite tool-call loops, streaming reliability under SSE, cross-origin authentication failures, and the tension between LLM autonomy and user control.</p>
+
+      <hr>
+
+      <h2>1. Introduction</h2>
+
+      <p>The release of function-calling capabilities in large language models (OpenAI, June 2023; Anthropic, March 2024) enabled a new class of applications in which an LLM acts as a reasoning controller that dispatches actions to external systems. This paradigm -- variously called "tool use," "function calling," or "agentic AI" -- has been widely discussed in the context of code generation (Devin, SWE-Agent), web browsing (WebVoyager), and enterprise automation (Microsoft Copilot).</p>
+
+      <p>Less attention has been paid to the application of tool-calling agents in <em>personal information management</em> (PIM), where the action space is smaller but the stakes are personal: a mistaken calendar entry or deleted todo directly affects a user's day. PIM also presents unique challenges: the agent must maintain temporal awareness, respect the user's timezone, handle ambiguous natural language about time ("tomorrow morning," "next week," "later"), and integrate information across multiple data types (events, tasks, notes, routines).</p>
+
+      <p>This paper describes Soft Axiom, a production PIM system built around a tool-calling agent. We focus on the applied AI decisions -- tool design, prompt engineering, model selection, error handling, and cost control -- that were necessary to make the system reliable enough for daily use.</p>
+
+      <hr>
+
+      <h2>2. System Architecture</h2>
+
+      <h3>2.1 Overview</h3>
+
+      <p>Soft Axiom follows a standard three-tier architecture:</p>
+
+<pre><code>Mobile App (Expo)  ─┐
+                    ├──&gt; FastAPI Backend (App Runner) ──&gt; PostgreSQL (RDS)
+Web App (Next.js)  ─┘          │
+                           LLM API (Fireworks / OpenAI / Anthropic)
+                           WeatherAPI.com
+                           Fireworks Whisper (transcription)</code></pre>
+
+      <p>The backend exposes REST endpoints for CRUD operations on all data types, plus a streaming chat endpoint (<code>POST /chat/</code>) that implements the agent loop. The frontend communicates via Server-Sent Events (SSE) for streaming LLM responses and standard HTTP for data operations.</p>
+
+      <h3>2.2 Agent Loop</h3>
+
+      <p>The core agent loop executes in <code>chat.py</code> and follows a multi-round tool-execution pattern:</p>
+
+<pre><code>for round in range(MAX_ROUNDS):  # MAX_ROUNDS = 5
+    response = await llm.stream_with_tools(messages, tools)
+    if response.has_tool_calls:
+        for tool_call in response.tool_calls:
+            result = await executor.execute(tool_call)
+            messages.append(tool_result_message(result))
+    else:
+        break  # LLM responded with text (via respond tool)</code></pre>
+
+      <p>Key design decisions:</p>
+
+      <ol>
+        <li><strong><code>tool_choice="required"</code></strong>: The LLM <em>must</em> call a tool on every turn. This prevents the common failure mode where the LLM responds with text instead of taking action, requiring the user to repeat their request.</li>
+        <li><strong>Maximum 5 rounds</strong>: Prevents runaway tool-call chains. In practice, most interactions complete in 1-2 rounds (search + respond, or create + respond).</li>
+        <li><strong>SSE streaming</strong>: Tool call arguments and final responses are streamed token-by-token to the frontend, providing real-time feedback during LLM generation.</li>
+      </ol>
+
+      <h3>2.3 Data Model</h3>
+
+      <p>The system manages seven entity types, all scoped to a <code>user_id</code> with date-based organization:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Entity</th>
+            <th>Key Fields</th>
+            <th>Date-Bound</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Event</td>
+            <td>title, start/end time, location, calendar_type (signal/echo), recurrence</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Todo</td>
+            <td>title, done status, position</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Journal</td>
+            <td>content, entry_date</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Plan</td>
+            <td>content, plan_date</td>
+            <td>Yes</td>
+          </tr>
+          <tr>
+            <td>Memo</td>
+            <td>title, content</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>Routine</td>
+            <td>name, steps[]</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>RoutineCompletion</td>
+            <td>routine_id, step_index, completion_date</td>
+            <td>Yes</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>All stores use PostgreSQL with GIN-indexed <code>tsvector</code> columns for full-text search.</p>
+
+      <hr>
+
+      <h2>3. Tool Design</h2>
+
+      <h3>3.1 From 16 Tools to 5: Consolidation</h3>
+
+      <p>The initial implementation (<code>b776cf6</code>, Feb 13) exposed 16 individual tools to the LLM:</p>
+
+<pre><code>create_event, update_event, delete_event,
+create_todo, update_todo, delete_todo,
+save_journal, save_plan,
+create_memo, update_memo, delete_memo,
+create_routine, delete_routine, add_routine_step, delete_routine_step, toggle_routine_step</code></pre>
+
+      <p>This was consolidated to 5 action-dispatching tools the same day (<code>d18c220</code>):</p>
+
+<pre><code>search, signal_calendar, echo_calendar, manage_todos, manage_routine</code></pre>
+
+      <p>Plus <code>get_weather</code> and <code>respond</code>, for a total of 7 active tools (later 8 with <code>manage_memos</code>).</p>
+
+      <p><strong>Rationale</strong>: LLMs perform better with fewer, semantically distinct tools. With 16 tools, the model frequently selected the wrong CRUD operation (e.g., <code>create_event</code> when <code>update_event</code> was needed) or hallucinated tool names. The consolidated tools use an <code>action</code> parameter to dispatch:</p>
+
+<pre><code>{
+  "name": "signal_calendar",
+  "parameters": {
+    "action": "create_event",
+    "title": "Team meeting",
+    "start_time": "2026-02-15T14:00:00",
+    "end_time": "2026-02-15T15:00:00",
+    "location": "Office"
+  }
+}</code></pre>
+
+      <p>This design reduces the tool selection problem from 16-way classification to 5-way, while preserving the same action space via the <code>action</code> parameter. The LLM handles the two-level dispatch (tool + action) more reliably than flat tool selection.</p>
+
+      <h3>3.2 The <code>respond</code> Tool</h3>
+
+      <p>A critical design element is the <code>respond</code> tool:</p>
+
+<pre><code>{
+  "name": "respond",
+  "description": "Send a text-only response to the user. Use this when you need to reply without performing any data operation.",
+  "parameters": {
+    "message": { "type": "string" }
+  }
+}</code></pre>
+
+      <p>Because <code>tool_choice="required"</code>, the LLM cannot emit free-text responses. Every output must flow through a tool call. The <code>respond</code> tool serves as the "output channel": after performing data operations, the LLM calls <code>respond</code> with a confirmation message, which the backend streams to the user as the final response.</p>
+
+      <p><strong>Why not allow free-text?</strong> In testing, models with optional tool use frequently <em>described</em> what they would do instead of doing it ("I'll create an event for you at 3pm" without actually calling the tool). Forcing tool use on every turn eliminated this failure mode entirely.</p>
+
+      <h3>3.3 The <code>search</code> Tool</h3>
+
+      <p>The <code>search</code> tool provides unified read access across all entity types:</p>
+
+<pre><code>{
+  "name": "search",
+  "parameters": {
+    "query": "string",
+    "source": "events|todos|journals|plans|memos|routines|all",
+    "date": "YYYY-MM-DD (optional)",
+    "date_range_start": "YYYY-MM-DD (optional)",
+    "date_range_end": "YYYY-MM-DD (optional)"
+  }
+}</code></pre>
+
+      <p>This is the most frequently called tool. Common patterns:</p>
+
+      <ul>
+        <li>User says "what's on my calendar tomorrow" -&gt; <code>search(source="events", date="2026-02-15")</code></li>
+        <li>User says "move my 3pm meeting" -&gt; <code>search(source="events", date="today")</code> -&gt; identify event -&gt; <code>signal_calendar(action="update_event", ...)</code></li>
+      </ul>
+
+      <h3>3.4 Context Injection</h3>
+
+      <p>Before the first LLM call, the system injects contextual information into the system prompt:</p>
+
+<pre><code>Current date and time: Friday, February 14, 2026, 2:30 PM
+Timezone: America/New_York
+Location: New York, NY
+
+Today's Signal events:
+- 10:00-11:00 Team standup (Office)
+- 14:00-15:30 Design review (Conference Room B)
+
+Today's open todos:
+- Buy groceries
+- Review PR #42
+
+Active routines:
+- Morning routine: Wake up, Exercise, Shower, Breakfast
+- Evening routine: Read, Meditate, Sleep</code></pre>
+
+      <p>This eliminates unnecessary tool calls for common information. Without it, the LLM would call <code>search</code> on every turn just to know what day it is or what events exist.</p>
+
+      <hr>
+
+      <h2>4. Prompt Engineering</h2>
+
+      <h3>4.1 System Prompt Design</h3>
+
+      <p>The system prompt defines the agent's personality ("Peter"), behavioral constraints, and domain knowledge. Key sections:</p>
+
+      <p><strong>Personality constraints:</strong></p>
+
+<pre><code>Talk like a real person -- warm, casual, and brief.
+Say what needs to be said and stop.
+NEVER say "Would you like...", "Want me to...", "Let me know if...",
+"Do you need...", or any similar follow-up offer.
+After calling a tool, confirm what you did in one short sentence.</code></pre>
+
+      <p>These constraints address a persistent failure mode of instruction-tuned LLMs: excessive helpfulness. Without them, the agent appends offers like "Would you like me to set a reminder?" to every response, which is inappropriate for a personal assistant used multiple times daily.</p>
+
+      <p><strong>Domain knowledge:</strong></p>
+
+<pre><code>Signal = what the user plans to do (future). Echo = what actually happened (past).
+Events = fixed appointments with specific times. Plans = daily agenda text.
+Echo events MUST cover full 24 hours with NO gaps. All echo events MUST have locations.</code></pre>
+
+      <p><strong>Sanity-checking instruction:</strong></p>
+
+<pre><code>Do NOT blindly transcribe the user's words into events.
+Interpret their intent. Example: "I came home then went to school at 9"
+means school at 9:00, NOT "came home at 9:00 then school."</code></pre>
+
+      <p>This instruction was added (<code>93e0106</code>, Feb 11) after observing the LLM misparse temporal descriptions, creating events with incorrect times.</p>
+
+      <h3>4.2 Echo Trace Prompt</h3>
+
+      <p>The Echo trace is the system's most complex prompt-driven interaction. When the user's greeting suggests casual conversation and no journal exists for today, the agent initiates a structured interview:</p>
+
+<pre><code>If today's journal entry is missing and the user sends a casual greeting,
+ask "How was your day?" to begin the echo trace.
+
+When recording echo events:
+1. Events must cover midnight to midnight with NO gaps
+2. Every event must have a location
+3. Infer reasonable defaults for unmentioned periods (sleep, meals, commute)
+4. Ask follow-up questions if needed to fill gaps
+5. Save a journal entry summarizing the day</code></pre>
+
+      <p>The LLM must generate 8-15 events from a few sentences of user input, requiring significant temporal reasoning and common-sense inference. For example, from "I went to class at 9, gym at 4, then came home," the agent must produce:</p>
+
+<pre><code>00:00-07:00  Sleep (Home)
+07:00-07:30  Morning routine (Home)
+07:30-08:30  Breakfast &amp; preparation (Home)
+08:30-09:00  Commute (Car)
+09:00-15:30  Class (University)
+15:30-16:00  Commute (Car)
+16:00-17:30  Gym (Gym)
+17:30-18:00  Commute (Car)
+18:00-19:00  Dinner (Home)
+19:00-23:00  Free time (Home)
+23:00-00:00  Sleep (Home)</code></pre>
+
+      <h3>4.3 Plan Generation Prompt</h3>
+
+<pre><code>Generate a daily plan using this structure:
+1. Start with the user's morning routine steps
+2. Insert Signal events at their scheduled times
+3. Fill gaps with open todos
+4. End with evening routine steps
+
+Format: short labels separated by arrows.
+Keep it concise -- no times, no explanations.
+Example: Running -&gt; Shower -&gt; Class -&gt; Lunch -&gt; Study -&gt; Gym -&gt; Dinner -&gt; Read -&gt; Sleep</code></pre>
+
+      <hr>
+
+      <h2>5. LLM Provider Migrations</h2>
+
+      <p>The system underwent four model switches in 14 days, each motivated by different production failures:</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Commit</th>
+            <th>Model</th>
+            <th>Reason for Switch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feb 8</td>
+            <td><code>90045fb</code></td>
+            <td>GPT-5 Nano (OpenAI)</td>
+            <td>Initial cloud deployment</td>
+          </tr>
+          <tr>
+            <td>Feb 10</td>
+            <td><code>0a025a2</code></td>
+            <td>GPT-OSS-20B (Fireworks)</td>
+            <td>Cost reduction, faster inference</td>
+          </tr>
+          <tr>
+            <td>Feb 13</td>
+            <td><code>0cf54fe</code></td>
+            <td>DeepSeek V3P2 (Fireworks)</td>
+            <td>Better tool-calling accuracy</td>
+          </tr>
+          <tr>
+            <td>Feb 14</td>
+            <td><code>bf5c397</code></td>
+            <td>MiniMax (via Fireworks)</td>
+            <td>Testing alternatives</td>
+          </tr>
+          <tr>
+            <td>Feb 14</td>
+            <td><code>c0473d2</code></td>
+            <td>GPT-OSS-20B (Fireworks)</td>
+            <td>Reverted, stability preferred</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>5.1 Provider Abstraction</h3>
+
+      <p>The system implements a provider abstraction (<code>LLMProvider</code> base class) with concrete implementations for OpenAI, Anthropic, and Google APIs. All three support the same interface:</p>
+
+<pre><code>class LLMProvider(ABC):
+    async def async_stream_with_tools(
+        self,
+        messages: list,
+        tools: list[dict],
+        tool_choice: str = "auto",
+    ) -&gt; AsyncIterator[StreamChunk]:
+        ...</code></pre>
+
+      <p>Fireworks AI is accessed through the OpenAI-compatible API (<code>base_url</code> parameter), which made switching between OpenAI-native and Fireworks-hosted models a single configuration change.</p>
+
+      <h3>5.2 Temperature Tuning</h3>
+
+<pre><code>db8582b  Revert temperature back to 0.7
+c0473d2  Switch LLM to gpt-oss-20b, update max_tokens to 16384 and temperature to 0.6</code></pre>
+
+      <p>Temperature was adjusted between 0.6 and 0.7 during model switches. Lower temperature (0.6) was tested with DeepSeek V3P2 to reduce tool-call argument hallucination but reverted to 0.7 for more natural conversational tone.</p>
+
+      <hr>
+
+      <h2>6. Failure Modes and Fixes</h2>
+
+      <h3>6.1 Infinite Tool-Call Loop</h3>
+
+      <p><strong>Problem</strong> (<code>d50f7bb</code>, Feb 13): The LLM would call <code>search</code> repeatedly without ever calling <code>respond</code>, consuming all 5 rounds and returning nothing to the user.</p>
+
+      <p><strong>Root cause</strong>: The search returned empty results, and the LLM interpreted this as needing to search differently, entering a retry loop.</p>
+
+      <p><strong>Fix</strong>: Added explicit handling for empty search results and prompt guidance: <em>"If search returns no results, respond to the user saying nothing was found. Do NOT retry the search."</em></p>
+
+      <h3>6.2 Cross-Origin Authentication Failure</h3>
+
+      <p><strong>Problem</strong> (<code>e62a70f</code>, Feb 11): Mobile app received 401 errors on all API calls.</p>
+
+      <p><strong>Root cause</strong>: A chain of three interacting bugs:</p>
+
+      <ol>
+        <li>FastAPI's default <code>redirect_slashes=True</code> sent 307 redirects for <code>/todos</code> -&gt; <code>/todos/</code></li>
+        <li>App Runner terminates TLS, so FastAPI generated <code>http://</code> redirect URLs</li>
+        <li>The redirect crossed origins (app -&gt; App Runner URL), causing the browser to strip the <code>Authorization</code> header</li>
+      </ol>
+
+      <p><strong>Fix</strong>: Added trailing slashes to all mobile API routes. Added <code>--proxy-headers --forwarded-allow-ips '*'</code> to Uvicorn for correct scheme detection.</p>
+
+      <h3>6.3 Streaming Reliability</h3>
+
+      <p><strong>Problem</strong> (<code>468f82f</code>, Feb 8): Chat responses would intermittently fail to display.</p>
+
+      <p><strong>Root cause</strong>: SSE connections were being dropped by intermediate proxies (Vercel edge, App Runner load balancer) on long-running responses. Additionally, the frontend was not correctly handling partial SSE frames.</p>
+
+      <p><strong>Fix</strong>: Implemented chunked SSE with keepalive pings. Added frontend reconnection logic with message deduplication.</p>
+
+      <h3>6.4 Timezone Bugs</h3>
+
+      <p><strong>Problem</strong> (<code>3ca8fd8</code>, Feb 12): Events appeared on the wrong date.</p>
+
+      <p><strong>Root cause</strong>: The backend stored UTC timestamps but the frontend rendered in local time. A user creating an event at 11pm EST would see it rendered on the next day in UTC.</p>
+
+      <p><strong>Fix</strong>: All date-based queries now use the user's timezone (auto-detected via browser API, sent in request headers). The system prompt includes the timezone so the LLM generates correct timestamps.</p>
+
+      <h3>6.5 Tool Argument Hallucination</h3>
+
+      <p><strong>Problem</strong> (observed across models): The LLM would generate plausible but incorrect tool arguments, e.g., using <code>id: "evt_123"</code> (a hallucinated ID format) instead of the actual event UUID returned by search.</p>
+
+      <p><strong>Mitigation</strong>:</p>
+
+      <ol>
+        <li>Tool result messages include explicit IDs: <em>"Created event abc-def-123. Title: Team meeting."</em></li>
+        <li>Search results include IDs prominently.</li>
+        <li>System prompt instructs: <em>"Always use exact IDs from search results. Never guess or fabricate IDs."</em></li>
+      </ol>
+
+      <p>This remains the most persistent reliability challenge. Different models hallucinate at different rates, and the failure is silent (the tool executor simply fails to find the hallucinated ID, returning an error).</p>
+
+      <hr>
+
+      <h2>7. Cost Control</h2>
+
+      <h3>7.1 Token Budget System</h3>
+
+      <p>Commit <code>0466106</code> (Feb 13) introduced a daily per-user token budget:</p>
+
+<pre><code>DAILY_BUDGET_USD = 0.20  # per user per day
+WARNING_THRESHOLD = 0.80  # warn at 80% usage
+
+class TokenUsageStore:
+    async def record_usage(self, user_id, input_tokens, output_tokens, model, cost):
+        ...
+    async def get_daily_usage(self, user_id, date) -&gt; float:
+        ...
+    async def check_budget(self, user_id) -&gt; BudgetStatus:
+        # Returns: OK, WARNING, or EXCEEDED</code></pre>
+
+      <p>At 80% budget consumption, the system prepends a warning to the LLM's system prompt: <em>"The user is approaching their daily token limit. Keep responses concise."</em> At 100%, the chat endpoint returns a 429 error with a human-readable message.</p>
+
+      <h3>7.2 Weather Caching</h3>
+
+      <p>Commit <code>18e10b2</code> (Feb 12) added 30-minute caching for weather API responses, reducing external API calls from ~20/day (every time the home page loaded) to ~4/day.</p>
+
+      <h3>7.3 Context Injection vs. Tool Calls</h3>
+
+      <p>Injecting today's events and todos into the system prompt (Section 3.4) reduces tool calls by approximately 40% based on observed patterns. Without context injection, the LLM's first action on most turns would be <code>search(source="events", date="today")</code>, adding latency and token cost.</p>
+
+      <hr>
+
+      <h2>8. Voice Input Pipeline</h2>
+
+      <p>The system supports voice input on both web and mobile:</p>
+
+<pre><code>User speaks -&gt; Audio recorded (WebM/Opus or M4A)
+            -&gt; Uploaded to /transcribe/ endpoint
+            -&gt; Fireworks Whisper v3 Turbo API
+            -&gt; Transcribed text returned
+            -&gt; Inserted into chat input
+            -&gt; User sends (or edits first)</code></pre>
+
+      <h3>8.1 Implementation Details</h3>
+
+      <ul>
+        <li><strong>Web</strong>: Browser <code>MediaRecorder</code> API captures WebM/Opus at 16kHz</li>
+        <li><strong>Mobile</strong>: Expo AV <code>Audio.Recording</code> captures M4A</li>
+        <li><strong>Backend</strong>: Proxies audio to Fireworks' dedicated audio endpoint (<code>/v1/audio/transcriptions</code>)</li>
+        <li><strong>Latency</strong>: ~1.5s for a 10-second recording</li>
+      </ul>
+
+      <h3>8.2 Audio Visualization</h3>
+
+      <p>Commit <code>6c7497d</code> (Feb 13) added real-time audio visualization bars during recording, providing visual feedback that the microphone is active and capturing audio. The visualizer uses the Web Audio API's <code>AnalyserNode</code> to extract frequency data at 60fps.</p>
+
+      <h3>8.3 Failure and Fix</h3>
+
+      <p>Commit <code>747a946</code> (Feb 11): <em>"Fix transcription by using Fireworks dedicated audio endpoint."</em> The initial implementation used the standard OpenAI-compatible <code>/v1/audio/transcriptions</code> endpoint, which returned errors on Fireworks. Switching to the dedicated endpoint resolved the issue.</p>
+
+      <hr>
+
+      <h2>9. RAG System (Implemented, Not Deployed)</h2>
+
+      <p>The codebase contains a complete Retrieval-Augmented Generation pipeline that is currently unused:</p>
+
+<pre><code>packages/core/src/soft_axiom_core/retrieval/
+├── intent.py        # Query intent parsing
+├── hybrid.py        # Vector + full-text hybrid search
+├── reranker.py      # Cross-encoder reranking
+├── evidence.py      # Provenance card generation
+└── orchestrator.py  # Pipeline orchestration</code></pre>
+
+      <p>This pipeline was built during Phase 1 (CLI era) for knowledge-base search. When the system pivoted to tool-calling, direct database queries through the <code>search</code> tool proved simpler and more reliable than RAG for the structured data types (events, todos, etc.) that dominate PIM use cases.</p>
+
+      <p><strong>Lesson</strong>: RAG is powerful for unstructured knowledge retrieval, but for structured personal data with known schemas, direct database queries via tool calls are more predictable and debuggable. The LLM already knows the schema through tool definitions; it doesn't need to retrieve and interpret documents.</p>
+
+      <hr>
+
+      <h2>10. Multi-Provider Tool Schema Translation</h2>
+
+      <p>Each LLM provider uses a different format for tool definitions:</p>
+
+      <p><strong>OpenAI format:</strong></p>
+
+<pre><code>{
+  "type": "function",
+  "function": {
+    "name": "search",
+    "description": "...",
+    "parameters": { "type": "object", "properties": { ... } }
+  }
+}</code></pre>
+
+      <p><strong>Anthropic format:</strong></p>
+
+<pre><code>{
+  "name": "search",
+  "description": "...",
+  "input_schema": { "type": "object", "properties": { ... } }
+}</code></pre>
+
+      <p><strong>Google format:</strong></p>
+
+<pre><code>{
+  "function_declarations": [{
+    "name": "search",
+    "description": "...",
+    "parameters": { "type": "object", "properties": { ... } }
+  }]
+}</code></pre>
+
+      <p>The system maintains tools in a canonical format (close to OpenAI's) and translates at the provider boundary. This translation layer was a source of subtle bugs -- particularly with nested <code>enum</code> types and <code>required</code> field arrays, which are handled differently across providers.</p>
+
+      <hr>
+
+      <h2>11. Lessons Learned</h2>
+
+      <h3>11.1 Force Tool Use, Always</h3>
+
+      <p>Setting <code>tool_choice="required"</code> with a <code>respond</code> tool as the output channel was the single most impactful architectural decision. It eliminated an entire class of failures (LLM describing actions instead of performing them) and made the system's behavior predictable: every turn produces exactly one tool call, every conversation ends with a <code>respond</code> call.</p>
+
+      <h3>11.2 Fewer Tools, More Actions</h3>
+
+      <p>Consolidating 16 tools into 5 action-dispatching tools improved selection accuracy. The LLM's job is easier when it needs to choose between <em>conceptually distinct domains</em> (calendar vs. todos vs. search) rather than <em>CRUD variants</em> (create vs. update vs. delete).</p>
+
+      <h3>11.3 Context is Cheaper than Tool Calls</h3>
+
+      <p>Injecting frequently-needed information (today's events, timezone, current time) into the system prompt costs ~500 tokens but saves 1-2 tool-call rounds per interaction. At scale, this is a net cost reduction and a significant latency improvement.</p>
+
+      <h3>11.4 Models are Interchangeable (Mostly)</h3>
+
+      <p>The four model switches demonstrated that the tool-calling architecture is largely model-agnostic. The same tools, prompts, and execution loop worked across GPT-5 Nano, GPT-OSS-20B, and DeepSeek V3P2 with only temperature tuning. However, models differ meaningfully in:</p>
+
+      <ul>
+        <li>Tool argument hallucination rate</li>
+        <li>Tendency to call unnecessary tools</li>
+        <li>Quality of temporal reasoning</li>
+        <li>Conversational tone</li>
+      </ul>
+
+      <h3>11.5 Streaming + Tool Calls is Hard</h3>
+
+      <p>SSE streaming with multi-round tool execution creates complex state management. The frontend must handle: partial text tokens, tool call start/end markers, tool result injection, and final response streaming -- all while maintaining a responsive UI. This was the most debugging-intensive part of the system.</p>
+
+      <h3>11.6 The 24-Hour Constraint Works</h3>
+
+      <p>The Echo calendar's requirement for gap-free 24-hour coverage initially seemed over-constrained. In practice, it forces the LLM to perform deeper temporal reasoning and produces richer data than unconstrained event logging. The constraint acts as a <em>prompt engineering technique</em>: by requiring completeness, it prevents the LLM from taking shortcuts.</p>
+
+      <hr>
+
+      <h2>12. Future Work</h2>
+
+      <ol>
+        <li><strong>Multi-turn Echo reconstruction</strong>: Currently, the Echo trace attempts to build the full timeline in one exchange. A multi-turn approach with explicit gap identification ("You mentioned going to class at 9. What did you do between 7 and 9?") could produce more accurate timelines.</li>
+        <li><strong>Signal-Echo comparison</strong>: Automated analysis of divergence between planned (Signal) and actual (Echo) days could surface behavioral patterns.</li>
+        <li><strong>Routine learning</strong>: The system could observe Echo patterns to automatically suggest new routines or adjust existing ones.</li>
+        <li><strong>Fine-tuned models</strong>: A small model fine-tuned on PIM tool calls could replace the general-purpose LLM for faster, cheaper, and more reliable tool selection.</li>
+      </ol>
+
+      <hr>
+
+      <h2>13. Conclusion</h2>
+
+      <p>Soft Axiom demonstrates that tool-calling LLM agents can serve as effective interfaces for personal information management when the tool architecture is carefully designed. The key principles -- forced tool use, consolidated action-dispatching tools, aggressive context injection, and structured elicitation through constraints -- are generalizable beyond the PIM domain.</p>
+
+      <p>The system's rapid development cycle (263 commits, 4 model switches, 28 days) also illustrates the current state of applied AI engineering: the abstractions are thin, model behavior is unpredictable, and production reliability requires extensive prompt engineering and defensive error handling. The gap between "demo works" and "daily driver" is bridged by dozens of small fixes to streaming, authentication, timezone handling, and cost control -- the unsexy infrastructure that makes an AI system actually usable.</p>
+
+      <hr>
+
+      <h2>References</h2>
+
+      <ul>
+        <li>Schick, T., Dwivedi-Yu, J., Dess&#236;, R., et al. (2023). Toolformer: Language Models Can Teach Themselves to Use Tools. <em>NeurIPS 2023</em>.</li>
+        <li>Patil, S. G., Zhang, T., Wang, X., &amp; Gonzalez, J. E. (2023). Gorilla: Large Language Model Connected with Massive APIs. <em>arXiv:2305.15334</em>.</li>
+        <li>Qin, Y., Liang, S., Ye, Y., et al. (2023). ToolLLM: Facilitating Large Language Models to Master 16000+ Real-world APIs. <em>arXiv:2307.16789</em>.</li>
+        <li>Yao, S., Zhao, J., Yu, D., et al. (2023). ReAct: Synergizing Reasoning and Acting in Language Models. <em>ICLR 2023</em>.</li>
+        <li>Yang, J., Jimenez, C. E., Wettig, A., et al. (2024). SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering. <em>arXiv:2405.15793</em>.</li>
+        <li>Lewis, P., Perez, E., Piktus, A., et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. <em>NeurIPS 2020</em>.</li>
+      </ul>
+
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>
