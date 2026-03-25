@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Right Amount of Code: Why More Is Not Better in the Age of AI</title>
+  <style>
+    :root {
+      --bg-color: #FDFBF7;
+      --text-color: #000000;
+      --accent-color: #333333;
+      --font-serif: "Times New Roman", Times, serif;
+      --font-mono: "Courier New", Courier, monospace;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: var(--font-mono);
+      line-height: 1.6;
+    }
+
+    body {
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-serif);
+      color: var(--text-color);
+    }
+
+    h1 {
+      margin-top: 1rem;
+      font-size: 1.8rem;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .post-date {
+      text-align: center;
+      margin-top: 0.3rem;
+      margin-bottom: 1.5rem;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    .post-box {
+      border: 1px solid #000;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.05rem;
+    }
+
+    .nav-buttons {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+      padding: 0.5rem;
+      width: 100%;
+      margin-top: auto;
+      margin-bottom: 1rem;
+    }
+
+    .nav-buttons a {
+      text-decoration: none;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      color: var(--text-color);
+      border: 1px solid #000;
+      padding: 0.5rem 1rem;
+      white-space: nowrap;
+      background-color: var(--bg-color);
+      transition: all 0.2s ease;
+      width: 220px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .nav-buttons a:hover {
+      background-color: #000;
+      color: var(--bg-color);
+    }
+
+    @media (max-width: 600px) {
+      .nav-buttons {
+        gap: 0.5rem;
+      }
+
+      .nav-buttons a {
+        width: 160px;
+        font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+      }
+
+      h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main style="flex: 1;">
+    <h1>The Right Amount of Code: Why More Is Not Better in the Age of AI</h1>
+    <div class="post-date">March 25, 2026</div>
+    <article class="post-box">
+      <p>
+        People need to be far more wary — and more conscious — about the explosion of token usage. It's not that higher
+        token consumption is inherently better or worse. The beauty lies in using the right amount of tokens for
+        everything: writing, testing, verifying, and exploring new ideas.
+      </p>
+
+      <p>
+        First, let's think about what an ideal codebase actually looks like — because many people are confusing quantity
+        with quality. More code is not better code. That is the key insight here.
+      </p>
+
+      <p>
+        Yes, tools like Claude Code and Codex help tremendously in reaching a working codebase faster. But once you
+        reach that point, you shouldn't be pushing as many PRs or commits. Instead, you should be spending those tokens
+        to test new ideas, explore edge cases, and stress the boundaries of what you've built.
+      </p>
+
+      <p>
+        I do foresee an explosion in applications and web services thanks to the lower barrier to entry. But the real
+        importance lies in the details. Can you design the system that performs the best? Can you debug — with AI — the
+        problems that AI itself cannot few-shot solve? Can you design a product that is meaningfully different and better
+        than what Claude Code or Codex first presented to you? Can you navigate a growing codebase and strike the right
+        balance? Can you even imagine the ideal size of your codebase — a few million lines, or a few thousand?
+      </p>
+
+      <p>
+        In a world of easier code generation, the bottleneck will of course be you, because you cannot verify every
+        single line. But it's also about accelerating yourself and understanding this balance. The lesson is simple:
+        more is not better. As one wise man used to say — and I don't see why it should be any different in this era
+        of coding.
+      </p>
+    </article>
+  </main>
+  <nav class="nav-buttons">
+    <a href="../index.html">Home</a>
+  </nav>
+</body>
+</html>
