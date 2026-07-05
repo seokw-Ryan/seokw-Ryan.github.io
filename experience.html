@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experience - Ryan Chung</title>
+    <style>
+        :root {
+            --bg-color: #FDFBF7;
+            --text-color: #000000;
+            --accent-color: #333333;
+            --font-serif: "Times New Roman", Times, serif;
+            --font-mono: "Courier New", Courier, monospace;
+        }
+
+        /* Common styles shared across all pages */
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation Buttons - Common across all pages */
+        .nav-buttons {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 1rem;
+        }
+
+        .nav-buttons a {
+            text-decoration: none;
+            font-size: clamp(0.8rem, 1.8vw, 1rem);
+            color: var(--text-color);
+            border: 1px solid #000;
+            padding: 0.5rem 1rem;
+            white-space: nowrap;
+            background-color: var(--bg-color);
+            transition: all 0.2s ease;
+            width: 220px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .nav-buttons a:hover {
+            background-color: #000;
+            color: var(--bg-color);
+        }
+
+        /* Basic layout */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Header styling */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        /* Section headings */
+        .section-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            margin: 0 0 1.5rem 0;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid #000;
+        }
+
+        .section-block {
+            margin-bottom: 3rem;
+        }
+
+        /* Cards */
+        .exp-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .exp-card {
+            background-color: rgba(0, 0, 0, 0.03);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .exp-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.3rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .exp-card h3 a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .exp-card h3 a:hover {
+            text-decoration: underline;
+        }
+
+        .exp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-bottom: 0.9rem;
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.6);
+        }
+
+        .exp-description {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        /* Publications */
+        .pub-card {
+            padding: 1.2rem 1.5rem;
+            border-left: 3px solid #000;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .pub-title {
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            margin: 0 0 0.4rem 0;
+        }
+
+        .pub-title a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .pub-title a:hover {
+            text-decoration: underline;
+        }
+
+        .pub-meta {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .exp-card {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .nav-buttons {
+                gap: 0.5rem;
+            }
+
+            .nav-buttons a {
+                width: 160px;
+                font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Experience</h1>
+        </header>
+
+        <section class="section-block">
+            <h2 class="section-title">Experience</h2>
+            <div class="exp-list">
+                <article class="exp-card">
+                    <h3>AI Engineering Intern &mdash; Arm</h3>
+                    <div class="exp-meta">
+                        <span>CPU Group</span>
+                        <span>Chandler, Arizona</span>
+                        <span>Summer 2026</span>
+                    </div>
+                    <p class="exp-description">
+                        AI engineering work within Arm's CPU group.
+                    </p>
+                </article>
+
+                <article class="exp-card">
+                    <h3><a href="chai/index.html">President &mdash; Cooper High-performance Algorithm and Intelligence (CHAI)</a></h3>
+                    <div class="exp-meta">
+                        <span>The Cooper Union</span>
+                        <span>Student Organization</span>
+                    </div>
+                    <p class="exp-description">
+                        Lead Cooper Union's student AI group &mdash; running weekly meetings,
+                        project builds, and paper-reading sessions.
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section-block">
+            <h2 class="section-title">Publications</h2>
+            <div class="exp-list">
+                <article class="pub-card">
+                    <p class="pub-title">
+                        <a href="https://ieeexplore.ieee.org/author/531154925279546" target="_blank" rel="noopener noreferrer">
+                            Experimental Study on Decreasing the Electricity Cost of Incubating Chickens in Guatemala
+                        </a>
+                    </p>
+                    <p class="pub-meta">
+                        Seokwoo Chung, Lisa Shay &middot; IEEE Global Humanitarian Technology
+                        Conference (GHTC), 2023
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <nav class="nav-buttons">
+            <a href="index.html">Home</a>
+        </nav>
+    </div>
+</body>
+</html>
