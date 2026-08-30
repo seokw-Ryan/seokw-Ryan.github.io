@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Soft Axiom - Ryan Chung</title>
+  <meta name="description"
+    content="Soft Axiom is a subject-agnostic learning platform that teaches you and verifies what you actually know. Built by Ryan Chung. Live at softaxiom.com." />
   <style>
     :root {
       --bg-color: #FDFBF7;
@@ -141,30 +143,38 @@
   <main style="flex: 1;">
     <h1><a href="https://softaxiom.com" style="color: inherit; text-decoration: none;">Soft Axiom</a></h1>
     <div class="tech-badges">
-      <span>Python</span>
-      <span>PyTorch</span>
-      <span>FastAPI</span>
       <span>Next.js</span>
       <span>React</span>
+      <span>TypeScript</span>
+      <span>Supabase</span>
       <span>PostgreSQL</span>
-      <span>pgvector</span>
-      <span>Docker</span>
-      <span>Pydantic</span>
       <span>Vercel</span>
-      <span>AWS App Runner</span>
-      <span>AWS RDS</span>
-      <span>AWS Cognito</span>
-      <span>OpenAI</span>
+      <span>OpenRouter</span>
+      <span>E2B</span>
+      <span>SymPy</span>
+      <span>Stripe</span>
     </div>
     <article class="project-box">
       <p>
-        Soft Axiom is a full-stack AI knowledge management platform with
-        RAG (retrieval-augmented generation) capabilities. Ingest
-        documents, query them through a chat interface backed by language
-        models, and manage your personal knowledge base. The Next.js
-        frontend is deployed on Vercel and the FastAPI backend runs on
-        AWS App Runner. Live at
+        <strong>Soft Axiom</strong> is a subject-agnostic learning platform, live at
         <a href="https://softaxiom.com" style="color: inherit;">softaxiom.com</a>.
+        You give it a goal and a topic; it builds a plan and then the steps, teaches
+        you through them, and asks questions grounded in your own uploaded material.
+        What accumulates is a model of what you actually know, concept by concept,
+        with a hard line between knowledge the system has <em>verified</em> and
+        knowledge it has merely <em>scheduled</em>. Maths is the first domain with a
+        machine-checkable oracle&mdash;a computer algebra system in a sandbox&mdash;which
+        makes it the beachhead rather than the ceiling.
+      </p>
+
+      <h2>The earlier build</h2>
+      <p>
+        Everything below describes the first version of Soft Axiom: an AI knowledge
+        management platform with a RAG pipeline, a FastAPI backend on AWS App Runner
+        and PostgreSQL with pgvector on AWS RDS. It shipped, it taught me the stack
+        end to end, and it is kept here because the reasoning still holds even though
+        the product it was reasoning about has since become a learning platform on
+        Supabase and Vercel. The write-up of the current system is a separate piece.
       </p>
 
       <h2>Motivation</h2>
